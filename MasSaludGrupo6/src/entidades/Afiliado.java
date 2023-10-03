@@ -6,11 +6,11 @@ package entidades;
  */
 public class Afiliado {
     private int idAfiliado;
-    private String nombre;
     private String apellido;
+    private String nombre;
+    private String dni;
     private String domicilio;
-    private String telefono;
-    private int dni;
+    private String telefono;   
     private boolean activo;
     
     //cosntructor vacio
@@ -18,7 +18,7 @@ public class Afiliado {
     }
     //constructor con todos los atributos
 
-    public Afiliado(int idAfiliado, String nombre, String apellido, String domicilio, String telefono, int dni, boolean activo) {
+    public Afiliado(int idAfiliado, String apellido,String nombre,String dni, String domicilio, String telefono, boolean activo) {
         this.idAfiliado = idAfiliado;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -30,7 +30,7 @@ public class Afiliado {
     
     //constructor sin id afiliado
     
-    public Afiliado(String nombre, String apellido, String domicilio, String telefono, int dni, boolean activo) {
+    public Afiliado(String apellido,String nombre,String dni, String domicilio, String telefono, boolean activo) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.domicilio = domicilio;
@@ -73,11 +73,11 @@ public class Afiliado {
         this.apellido = apellido;
     }
 
-    public int getDni() {
+    public String getDni() {
         return dni;
     }
 
-    public void setDni(int dni) {
+    public void setDni(String dni) {
         this.dni = dni;
     }
 

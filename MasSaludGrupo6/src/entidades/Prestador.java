@@ -6,11 +6,13 @@ package entidades;
  */
 public class Prestador {
     private int idPrestador;
-    private String nombre;
     private String apellido;
+    private String nombre;    
     private int dni;
-    private boolean activo;
+    private String domicilio;
+    private String telefono;
     private Especialidad especialidad;
+    private boolean activo;    
     
     //cosntructor vacio
 
@@ -18,23 +20,27 @@ public class Prestador {
     }
      //constructor con todos los atributos
 
-    public Prestador(int idPrestador, String nombre, String apellido, int dni, boolean activo, Especialidad especialidad) {
+    public Prestador(int idPrestador, String apellido, String nombre, int dni, String domicilio, String telefono, Especialidad especialidad, boolean activo) {
         this.idPrestador = idPrestador;
-        this.nombre = nombre;
         this.apellido = apellido;
+        this.nombre = nombre;
         this.dni = dni;
-        this.activo = activo;
+        this.domicilio = domicilio;
+        this.telefono = telefono;
         this.especialidad = especialidad;
+        this.activo = activo;
     }
-    //constructor sin id prestador
 
-    public Prestador(String nombre, String apellido, int dni, boolean activo, Especialidad especialidad) {
-        this.nombre = nombre;
+    public Prestador(String apellido, String nombre, int dni, String domicilio, String telefono, Especialidad especialidad, boolean activo) {
         this.apellido = apellido;
+        this.nombre = nombre;
         this.dni = dni;
-        this.activo = activo;
+        this.domicilio = domicilio;
+        this.telefono = telefono;
         this.especialidad = especialidad;
+        this.activo = activo;
     }
+   
     //getters and setters
 
     public int getIdPrestador() {
@@ -63,12 +69,29 @@ public class Prestador {
 
     public int getDni() {
         return dni;
-    }
+    }    
 
     public void setDni(int dni) {
         this.dni = dni;
     }
 
+    public String getDomicilio() {
+        return domicilio;
+    }
+
+    public void setDomicilio(String domicilio) {
+        this.domicilio = domicilio;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+    
+    
     public boolean isActivo() {
         return activo;
     }
@@ -88,7 +111,7 @@ public class Prestador {
 
     @Override
     public String toString() {
-        return "Prestador{" + "idPrestador=" + idPrestador + ", nombre=" + nombre + ", apellido=" + apellido + ", dni=" + dni + ", activo=" + activo + ", especialidad=" + especialidad + '}';
-    }
+        return "Prestador{" + "idPrestador=" + idPrestador + ", apellido=" + apellido + ", nombre=" + nombre + ", dni=" + dni + ", domicilio=" + domicilio + ", telefono=" + telefono + ", especialidad=" + especialidad + ", activo=" + activo + '}';
+    }    
     
 }

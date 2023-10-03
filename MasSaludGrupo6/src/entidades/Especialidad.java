@@ -6,8 +6,8 @@ package entidades;
  */
 public class Especialidad {
     
-    private int idEspecialidad;
-    private String especialidad;
+    private int idCodigo;
+    private String tipo;
     
     //cosntructor vacio
 
@@ -15,38 +15,36 @@ public class Especialidad {
     }
      //constructor con todos los atributos
 
-    public Especialidad(int idEspecialidad, String especialidad) {
-        this.idEspecialidad = idEspecialidad;
-        this.especialidad = especialidad;
-    }
-    //constructor sin id especialidad
-
-    public Especialidad(String especialidad) {
-        this.especialidad = especialidad;
-    }
-    
-    //getters and setters
-
-    public int getIdEspecialidad() {
-        return idEspecialidad;
+    public Especialidad(int idCodigo, String tipo) {
+        this.idCodigo = idCodigo;
+        this.tipo = tipo;
     }
 
-    public void setIdEspecialidad(int idEspecialidad) {
-        this.idEspecialidad = idEspecialidad;
+    public Especialidad(String tipo) {
+        this.tipo = tipo;
     }
 
-    public String getEspecialidad() {
-        return especialidad;
+    public int getIdCodigo() {
+        return idCodigo;
     }
 
-    public void setEspecialidad(String especialidad) {
-        this.especialidad = especialidad;
+    public void setIdCodigo(int idCodigo) {
+        this.idCodigo = idCodigo;
     }
-    // despues modificar to string segun lo que necesitemos mas adelante
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
 
     @Override
     public String toString() {
-        return "Especialidad{" + "idEspecialidad=" + idEspecialidad + ", especialidad=" + especialidad + '}';
+        return "Especialidad{" + "idCodigo=" + idCodigo + ", tipo=" + tipo + '}';
     }
+
+    
     
 }

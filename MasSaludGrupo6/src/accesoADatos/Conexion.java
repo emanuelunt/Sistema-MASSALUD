@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
  */
 public class Conexion {
     private static final String URL = "jdbc:mariadb://localhost/";
-    private static final String DB = "registrodb";
+    private static final String DB = "massalud";
     private static final String USUARIO = "root";
     private static String PASSWORD = "";
     
@@ -21,7 +21,7 @@ public class Conexion {
     
     private Conexion(){};
     
-    public static Connection  getConexion() throws ClassNotFoundException{
+    public static Connection  getConexion(){
         
         if(connection == null){
             
@@ -32,9 +32,9 @@ public class Conexion {
                 
             }
             catch(SQLException ex){
-                JOptionPane.showMessageDialog(null, "Error al conectar a la DB 1 " + ex.getMessage());
+                JOptionPane.showMessageDialog(null, "Error al conectar a la DB MasSalud " + ex.getMessage());
             }catch(ClassNotFoundException ex){
-                JOptionPane.showMessageDialog(null, "Error al cargar los driver 2 " + ex.getMessage());
+                JOptionPane.showMessageDialog(null, "Error al cargar los driver " + ex.getMessage());
             }
         }
         return connection;    

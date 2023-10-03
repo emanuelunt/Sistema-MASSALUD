@@ -8,11 +8,14 @@ import java.time.LocalDate;
  */
 public class Orden {
     private int idOrden;
+    private String codigo;
+    private Afiliado afiliado;
+    private Prestador prestador;
     private LocalDate fecha;
     private String formaPago;
     private double importe;
-    private Afiliado idAfiliado;
-    private Prestador prestador;
+    
+    
     
     //cosntructor vacio
 
@@ -20,23 +23,26 @@ public class Orden {
     }
     //constructor sin id especialidad
 
-    public Orden(LocalDate fecha, String formaPago, double importe, Afiliado idAfiliado, Prestador prestador) {
-        this.fecha = fecha;
-        this.formaPago = formaPago;
-        this.importe = importe;
-        this.idAfiliado = idAfiliado;
-        this.prestador = prestador;
-    }
-    //constructor con todos los atributos
-
-    public Orden(int idOrden, LocalDate fecha, String formaPago, double importe, Afiliado idAfiliado, Prestador prestador) {
+    public Orden(int idOrden, String codigo, Afiliado afiliado, Prestador prestador, LocalDate fecha, String formaPago, double importe) {
         this.idOrden = idOrden;
+        this.codigo = codigo;
+        this.afiliado = afiliado;
+        this.prestador = prestador;
         this.fecha = fecha;
         this.formaPago = formaPago;
         this.importe = importe;
-        this.idAfiliado = idAfiliado;
-        this.prestador = prestador;
     }
+
+    public Orden(String codigo, Afiliado afiliado, Prestador prestador, LocalDate fecha, String formaPago, double importe) {
+        this.codigo = codigo;
+        this.afiliado = afiliado;
+        this.prestador = prestador;
+        this.fecha = fecha;
+        this.formaPago = formaPago;
+        this.importe = importe;
+    }
+    
+        
     //getters and setters
 
     public int getIdOrden() {
@@ -46,6 +52,15 @@ public class Orden {
     public void setIdOrden(int idOrden) {
         this.idOrden = idOrden;
     }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    } 
+    
 
     public LocalDate getFecha() {
         return fecha;
@@ -71,12 +86,12 @@ public class Orden {
         this.importe = importe;
     }
 
-    public Afiliado getIdAfiliado() {
-        return idAfiliado;
+    public Afiliado getAfiliado() {
+        return afiliado;
     }
 
-    public void setIdAfiliado(Afiliado idAfiliado) {
-        this.idAfiliado = idAfiliado;
+    public void setAfiliado(Afiliado afiliado) {
+        this.afiliado = afiliado;
     }
 
     public Prestador getPrestador() {
@@ -86,11 +101,14 @@ public class Orden {
     public void setPrestador(Prestador prestador) {
         this.prestador = prestador;
     }
+        
     // despues modificar to string segun lo que necesitemos mas adelante
 
     @Override
     public String toString() {
-        return "Orden{" + "idOrden=" + idOrden + ", fecha=" + fecha + ", formaPago=" + formaPago + ", importe=" + importe + ", idAfiliado=" + idAfiliado + ", prestador=" + prestador + '}';
+        return "Orden{" + "idOrden=" + idOrden + ", codigo=" + codigo + ", afiliado=" + afiliado + ", prestador=" + prestador + ", fecha=" + fecha + ", formaPago=" + formaPago + ", importe=" + importe + '}';
     }
+
+    
     
 }
