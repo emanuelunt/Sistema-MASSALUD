@@ -99,7 +99,7 @@ public class AfiliadoData {
             JOptionPane.showMessageDialog(null, "(En Modificar)Error al acceder a la tabla Afiliados." + ex.getMessage());
         }
 
-    } // Fin de moficiar Afiliado
+    } // Fin de modificar Afiliado
     
     public List<Afiliado> listarAfiliado() { // Lista de Afiliado
 

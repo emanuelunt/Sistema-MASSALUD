@@ -8,7 +8,7 @@ public class Prestador {
     private int idPrestador;
     private String apellido;
     private String nombre;    
-    private int dni;
+    private String dni;
     private String domicilio;
     private String telefono;
     private Especialidad especialidad;
@@ -20,7 +20,7 @@ public class Prestador {
     }
      //constructor con todos los atributos
 
-    public Prestador(int idPrestador, String apellido, String nombre, int dni, String domicilio, String telefono, Especialidad especialidad, boolean activo) {
+    public Prestador(int idPrestador, String apellido, String nombre, String dni, String domicilio, String telefono, Especialidad especialidad, boolean activo) {
         this.idPrestador = idPrestador;
         this.apellido = apellido;
         this.nombre = nombre;
@@ -31,7 +31,7 @@ public class Prestador {
         this.activo = activo;
     }
 
-    public Prestador(String apellido, String nombre, int dni, String domicilio, String telefono, Especialidad especialidad, boolean activo) {
+    public Prestador(String apellido, String nombre, String dni, String domicilio, String telefono, Especialidad especialidad, boolean activo) {
         this.apellido = apellido;
         this.nombre = nombre;
         this.dni = dni;
@@ -67,11 +67,11 @@ public class Prestador {
         this.apellido = apellido;
     }
 
-    public int getDni() {
+    public String getDni() {
         return dni;
     }    
 
-    public void setDni(int dni) {
+    public void setDni(String dni) {
         this.dni = dni;
     }
 
