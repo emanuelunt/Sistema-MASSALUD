@@ -14,6 +14,7 @@ public class Orden {
     private LocalDate fecha;
     private String formaPago;
     private double importe;
+    private boolean activo;
     
     
     
@@ -23,7 +24,7 @@ public class Orden {
     }
     //constructor sin id especialidad
 
-    public Orden(int idOrden, String codigo, Afiliado afiliado, Prestador prestador, LocalDate fecha, String formaPago, double importe) {
+    public Orden(int idOrden, String codigo, Afiliado afiliado, Prestador prestador, LocalDate fecha, String formaPago, double importe, boolean activo) {
         this.idOrden = idOrden;
         this.codigo = codigo;
         this.afiliado = afiliado;
@@ -31,17 +32,18 @@ public class Orden {
         this.fecha = fecha;
         this.formaPago = formaPago;
         this.importe = importe;
+        this.activo = activo;
     }
 
-    public Orden(String codigo, Afiliado afiliado, Prestador prestador, LocalDate fecha, String formaPago, double importe) {
+    public Orden(String codigo, Afiliado afiliado, Prestador prestador, LocalDate fecha, String formaPago, double importe, boolean activo) {
         this.codigo = codigo;
         this.afiliado = afiliado;
         this.prestador = prestador;
         this.fecha = fecha;
         this.formaPago = formaPago;
         this.importe = importe;
+        this.activo = activo;
     }
-    
         
     //getters and setters
 
@@ -101,13 +103,24 @@ public class Orden {
     public void setPrestador(Prestador prestador) {
         this.prestador = prestador;
     }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
+    
         
     // despues modificar to string segun lo que necesitemos mas adelante
 
     @Override
     public String toString() {
-        return "Orden{" + "idOrden=" + idOrden + ", codigo=" + codigo + ", afiliado=" + afiliado + ", prestador=" + prestador + ", fecha=" + fecha + ", formaPago=" + formaPago + ", importe=" + importe + '}';
+        return "Orden{" + "idOrden=" + idOrden + ", codigo=" + codigo + ", afiliado=" + afiliado + ", prestador=" + prestador + ", fecha=" + fecha + ", formaPago=" + formaPago + ", importe=" + importe + ", activo=" + activo + '}';
     }
+
+    
 
     
     

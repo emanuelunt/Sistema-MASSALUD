@@ -21,7 +21,7 @@ public class Conexion {
     
     private Conexion(){};
     
-    public static Connection  getConexion(){
+    public static Connection  getConexion() /*throws ClassNotFoundException*/{
         
         if(connection == null){
             
