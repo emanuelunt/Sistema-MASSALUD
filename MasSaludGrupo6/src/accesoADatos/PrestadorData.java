@@ -185,4 +185,41 @@ public class PrestadorData {
         return prestador;
     }// Fin Buscar Prestador por DNI
     
+    public List<Prestador> listarPrestadorXespecialidad(String _espe) { // Lista de Prestador x Especialidad
+
+        List<Prestador> _lista = new ArrayList<>();
+        
+
+        try {
+            String sql = "SELECT idPrestador,apellido,nombre,dni,domicilio,telefono,id_especialidad,tipo,prestadores.activo FROM prestadores JOIN especialidades ON id_especialidad = idCodigo WHERE tipo = ? AND prestadores.activo= 1 ORDER BY apellido;";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, _espe);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+
+                Prestador prestador = new Prestador();
+                Especialidad especialidad = new Especialidad();
+                especialidad.setIdCodigo(rs.getInt("id_especialidad"));
+                especialidad.setTipo(rs.getString("tipo"));
+                
+                prestador.setIdPrestador(rs.getInt("idPrestador"));
+                prestador.setApellido(rs.getString("apellido"));
+                prestador.setNombre(rs.getString("nombre"));
+                prestador.setDni(rs.getString("dni"));
+                prestador.setDomicilio(rs.getString("domicilio"));
+                prestador.setTelefono(rs.getString("telefono"));
+                prestador.setEspecialidad(especialidad); 
+                prestador.setActivo(rs.getBoolean("activo"));                
+                _lista.add(prestador);
+               
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "(Listar Prestador x Especialidad)Error al acceder a la tabla Prestador." + ex.getMessage());
+        }
+
+        return _lista;
+    } // Fin Lista de Prestadores X Especialidad
+    
 }

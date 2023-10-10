@@ -10,6 +10,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -104,4 +107,78 @@ public class OrdenData {
         }
     } // Fin de modificar Orden
 
+    
+     public List<Orden> listarOrdenes() { // Lista de ordenes
+
+        List<Orden> _lista = new ArrayList<>();
+
+        try {
+            String sql = "SELECT idOrden,codigo,a.idAfiliado,a.apellido AS apellidoA,a.nombre AS nombreA, p.idPrestador,p.apellido AS apellidoP,p.nombre AS nombreP,e.tipo, fecha,formaPago,importe \n" +
+"FROM ordenes JOIN afiliados AS a ON (ordenes.id_afiliado = a.idAfiliado) JOIN prestadores AS p ON (p.idPrestador = ordenes.id_prestador) \n" +
+"JOIN especialidades AS e ON (p.id_especialidad = e.idCodigo);";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+
+                Orden _orden = new Orden();
+                Afiliado _afiliado = new Afiliado(rs.getInt("idAfiliado"),rs.getString("apellidoA"),rs.getString("nombreA"),null, null,null,true);
+                Especialidad _espe = new Especialidad(rs.getString("tipo"), true);                
+                Prestador _prestador = new Prestador(rs.getInt("idPrestador"),rs.getString("apellidoP"), rs.getString("nombreP"),null,null, null,_espe,true);
+               
+                _orden.setIdOrden(rs.getInt("idOrden"));
+                _orden.setCodigo(rs.getString("codigo"));
+                _orden.setAfiliado(_afiliado);
+                _orden.setPrestador(_prestador);
+                _orden.setFecha(rs.getDate("fecha").toLocalDate());
+                _orden.setFormaPago(rs.getString("formaPago"));
+                _orden.setImporte(rs.getDouble("importe"));
+                
+                _lista.add(_orden);               
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "(Listar Ordenes)Error al acceder a la tabla Ordenes." + ex.getMessage());
+        }
+        return _lista;
+    } // Fin Listar de Ordenes
+     
+     public List<Orden> listarOrdenesXfecha(LocalDate _fecha) { // Lista de ordenes x fecha
+
+        List<Orden> _lista = new ArrayList<>();
+
+        try {
+            String sql = "SELECT idOrden,codigo,a.idAfiliado,a.apellido AS apellidoA,a.nombre AS nombreA, p.idPrestador,p.apellido AS apellidoP,p.nombre AS nombreP,e.tipo, fecha,formaPago,importe \n" +
+"FROM ordenes JOIN afiliados AS a ON (ordenes.id_afiliado = a.idAfiliado) JOIN prestadores AS p ON (p.idPrestador = ordenes.id_prestador) \n" +
+"JOIN especialidades AS e ON (p.id_especialidad = e.idCodigo) WHERE fecha = ?;";
+            
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setDate(1, Date.valueOf(_fecha));
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+
+                Orden _orden = new Orden();
+                Afiliado _afiliado = new Afiliado(rs.getInt("idAfiliado"),rs.getString("apellidoA"),rs.getString("nombreA"),null, null,null,true);
+                Especialidad _espe = new Especialidad(rs.getString("tipo"), true);                
+                Prestador _prestador = new Prestador(rs.getInt("idPrestador"),rs.getString("apellidoP"), rs.getString("nombreP"),null,null, null,_espe,true);
+               
+                _orden.setIdOrden(rs.getInt("idOrden"));
+                _orden.setCodigo(rs.getString("codigo"));
+                _orden.setAfiliado(_afiliado);
+                _orden.setPrestador(_prestador);
+                _orden.setFecha(rs.getDate("fecha").toLocalDate());
+                _orden.setFormaPago(rs.getString("formaPago"));
+                _orden.setImporte(rs.getDouble("importe"));
+                
+                _lista.add(_orden);               
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "(Listar Ordenes x fecha)Error al acceder a la tabla Ordenes." + ex.getMessage());
+        }
+        return _lista;
+    } // Fin Listar de Ordenes x fecha
+     
+     /* falta -> Consultar las ordenes sacada por afiliado o dado un prestador las ordenes de donde figura */
 }

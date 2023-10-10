@@ -7,8 +7,13 @@ import entidades.Afiliado;
 import entidades.Especialidad;
 import entidades.Orden;
 import entidades.Prestador;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.Month;
+import java.time.ZoneId;
+import java.util.Date;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -44,7 +49,7 @@ public class Test {
         
        Prestador prestador = new Prestador(1, "Sampaoli", "Juan Carlos", "00365400", "Barrio los jardines", "11000011", especialidad, true);
         
-       // PrestadorData presData = new PrestadorData();
+       PrestadorData presData = new PrestadorData();
 
         // System.out.println(presData.guardarPrestador(prestador).toString());
         // presData.eliminarPrestador(1);
@@ -53,6 +58,11 @@ public class Test {
        /* for (Prestador items : presData.listarPrestador()) {
             System.out.println(items.toString());
         } */
+       
+        System.out.println("------- Lista de prestadores X Especialidad -------");
+        for (Prestador item : presData.listarPrestadorXespecialidad("Cardiología")) {
+            System.out.println(item.toString());
+        }
         
         //System.out.println(presData.buscarPrestadorPorDni("00365401"));
         //System.out.println((presData.buscarPrestadorPorDni("00365400")).toString());
@@ -63,12 +73,12 @@ public class Test {
         //espe.eliminarEspecialidad(2);
         
         //espe.modificarEspecialidad(especialidad);
-        
+        System.out.println("------- Lista de  Especialidad -------");
         for (Especialidad items : espe.listarEspecialidad()) {
             System.out.println(items.toString());
         }
         System.out.println("------------------- Buscar ----------------------------");
-        System.out.println((espe.buscarEspecialidadPorTipo("Pediatra")).toString());
+        System.out.println((espe.buscarEspecialidadPorTipo("Geriatria")).toString());
         
                
         Orden consulta = new Orden(1,"P0002",_afiliado,prestador, LocalDate.now(), "Credito", 10250.3,true);
@@ -77,7 +87,18 @@ public class Test {
        // pedirOrden.guardarOrden(consulta);        
        //pedirOrden.eliminarOrden(1);
        
-       pedirOrden.modificarOrden(consulta);
+       //pedirOrden.modificarOrden(consulta);
+       
+        System.out.println("-------  Listar Ordenes -----------");
+        OrdenData _ordenes = new OrdenData();
+        for (Orden item : _ordenes.listarOrdenes()) {
+            System.out.println(item.toString());
+        }
+        
+        System.out.println("-------  Listar Ordenes x Fecha -----------");
+        for (Orden item : _ordenes.listarOrdenesXfecha(LocalDate.of(2023, 8, 17)) ) {
+            System.out.println(item.toString());
+        }
         
     }    
 }
