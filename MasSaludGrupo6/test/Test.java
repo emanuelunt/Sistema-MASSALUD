@@ -100,5 +100,15 @@ public class Test {
             System.out.println(item.toString());
         }
         
+        System.out.println("-------  Listar Ordenes x id Afiliado -----------");
+        for (Orden item : _ordenes.listarOrdenesXidAfiliado(2) ) {
+            System.out.println(item.toString());
+        }
+        
+        System.out.println("-------  Listar Ordenes x id Prestador -----------");
+        for (Orden item : _ordenes.listarOrdenesXidPrestador(2) ) {
+            System.out.println(item.toString());
+        }
+        
     }    
 }
