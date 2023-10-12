@@ -3,15 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Curso%20Argentina%20Programa/Proyecto/Sistema-MASSALUD/MasSaludGrupo6/src/accesoADatos/Conexion.java</file>
-            <file>file:/D:/Curso%20Argentina%20Programa/Proyecto/Sistema-MASSALUD/MasSaludGrupo6/src/accesoADatos/PrestadorData.java</file>
-            <file>file:/D:/Curso%20Argentina%20Programa/Proyecto/Sistema-MASSALUD/MasSaludGrupo6/test/Test.java</file>
-            <file>file:/D:/Curso%20Argentina%20Programa/Proyecto/Sistema-MASSALUD/MasSaludGrupo6/src/entidades/Afiliado.java</file>
-            <file>file:/D:/Curso%20Argentina%20Programa/Proyecto/Sistema-MASSALUD/MasSaludGrupo6/src/accesoADatos/EspecialidadData.java</file>
-            <file>file:/D:/Curso%20Argentina%20Programa/Proyecto/Sistema-MASSALUD/MasSaludGrupo6/src/entidades/Orden.java</file>
-            <file>file:/D:/Curso%20Argentina%20Programa/Proyecto/Sistema-MASSALUD/MasSaludGrupo6/src/entidades/Especialidad.java</file>
-            <file>file:/D:/Curso%20Argentina%20Programa/Proyecto/Sistema-MASSALUD/MasSaludGrupo6/src/entidades/Prestador.java</file>
-            <file>file:/D:/Curso%20Argentina%20Programa/Proyecto/Sistema-MASSALUD/MasSaludGrupo6/src/accesoADatos/OrdenData.java</file>
+            <file>file:/C:/Users/Nuri/Desktop/Sistema-MASSALUD/MasSaludGrupo6/src/accesoADatos/OrdenData.java</file>
+            <file>file:/C:/Users/Nuri/Desktop/Sistema-MASSALUD/MasSaludGrupo6/test/Test.java</file>
+            <file>file:/C:/Users/Nuri/Desktop/Sistema-MASSALUD/MasSaludGrupo6/src/entidades/Orden.java</file>
+            <file>file:/C:/Users/Nuri/Desktop/Sistema-MASSALUD/MasSaludGrupo6/src/vistas/Main.java</file>
+            <file>file:/C:/Users/Nuri/Desktop/Sistema-MASSALUD/MasSaludGrupo6/src/accesoADatos/AfiliadoData.java</file>
+            <file>file:/C:/Users/Nuri/Desktop/Sistema-MASSALUD/MasSaludGrupo6/src/vistas/AfiliadosForm.java</file>
         </group>
     </open-files>
 </project-private>
