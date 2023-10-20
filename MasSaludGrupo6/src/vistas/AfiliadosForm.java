@@ -6,6 +6,8 @@ package vistas;
 
 import accesoADatos.AfiliadoData;
 import entidades.Afiliado;
+import java.sql.Date;
+import java.time.LocalDate;
 import javax.swing.JOptionPane;
 
 /**
@@ -91,6 +93,7 @@ public class AfiliadosForm extends javax.swing.JInternalFrame {
         jtApellido.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jtNombre.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jtNombre.setFocusable(false);
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
@@ -140,9 +143,19 @@ public class AfiliadosForm extends javax.swing.JInternalFrame {
 
         jbCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/cancel_77947.png"))); // NOI18N
         jbCancelar.setText("Cancelar");
+        jbCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbCancelarActionPerformed(evt);
+            }
+        });
 
         jbSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/salida.png"))); // NOI18N
         jbSalir.setText("Salir");
+        jbSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbSalirActionPerformed(evt);
+            }
+        });
 
         jbBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/buscar.png"))); // NOI18N
         jbBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -269,7 +282,7 @@ public class AfiliadosForm extends javax.swing.JInternalFrame {
         jtTelefono.setText(afiliado.getTelefono());
         jcheckActivo.setSelected(afiliado.isActivo());
         
-        System.out.println(afiliado.toString());
+        //System.out.println(afiliado.toString());
 
     }//GEN-LAST:event_jbBuscarActionPerformed
 
@@ -321,6 +334,16 @@ public class AfiliadosForm extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_jbAliminarActionPerformed
 
+    private void jbCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCancelarActionPerformed
+        // Método del boton cancelar
+        limpiparControles();
+    }//GEN-LAST:event_jbCancelarActionPerformed
+
+    private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
+        // Método del boton salir
+        this.dispose();
+    }//GEN-LAST:event_jbSalirActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
@@ -356,6 +379,17 @@ public class AfiliadosForm extends javax.swing.JInternalFrame {
         jcheckActivo.setSelected(true);
 
         jtApellido.requestFocus();
+    }
+    
+    private void limpiparControles() {
+
+        jtApellido.setText("");
+        jtNombre.setText("");
+        jtDni.setText("");
+        jtDomicilio.setText("");
+        jtTelefono.setText("");
+        jcheckActivo.setSelected(true);
+        jbNuevo.requestFocus();
     }
 
 }
