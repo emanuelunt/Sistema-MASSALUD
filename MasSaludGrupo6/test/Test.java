@@ -110,5 +110,10 @@ public class Test {
             System.out.println(item.toString());
         }
         
+        System.out.println("------- Busqueda por apellido (parte del apellido) -----------");
+        for (Afiliado item : afiliado.buscarAfiliadoPorApellido("ri") ) {
+            System.out.println(item.toString());
+        }
+        
     }    
 }

@@ -7,7 +7,14 @@ package vistas;
 import accesoADatos.AfiliadoData;
 import accesoADatos.EspecialidadData;
 import entidades.Especialidad;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Date;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
+import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -17,10 +24,18 @@ public class EspecialidadesForm extends javax.swing.JInternalFrame {
 
     private Especialidad esp = new Especialidad();
     private boolean nuevo = false;
-    
+
+    private DefaultTableModel modelo = new DefaultTableModel() {
+        public boolean isCellEditable(int fila, int columna) {
+            return false;
+        }
+    };
+
     public EspecialidadesForm() {
         initComponents();
         jtEspecialidad.requestFocus();
+        cargarCabecera();
+        cargarTablaEspecialidad();
     }
 
     /**
@@ -32,6 +47,8 @@ public class EspecialidadesForm extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
@@ -45,6 +62,21 @@ public class EspecialidadesForm extends javax.swing.JInternalFrame {
         jbSalir = new javax.swing.JButton();
         jbBuscar = new javax.swing.JButton();
         jCheckActivo = new javax.swing.JCheckBox();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tablaEspecialidad = new javax.swing.JTable();
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
 
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
 
@@ -131,6 +163,24 @@ public class EspecialidadesForm extends javax.swing.JInternalFrame {
         jCheckActivo.setBackground(new java.awt.Color(102, 102, 102));
         jCheckActivo.setSelected(true);
 
+        tablaEspecialidad.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tablaEspecialidad.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaEspecialidadMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tablaEspecialidad);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -138,17 +188,6 @@ public class EspecialidadesForm extends javax.swing.JInternalFrame {
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addComponent(jbNuevo)
-                        .addGap(18, 18, 18)
-                        .addComponent(jbEliminar)
-                        .addGap(18, 18, 18)
-                        .addComponent(jbGuardar)
-                        .addGap(18, 18, 18)
-                        .addComponent(jbCancelar)
-                        .addGap(18, 18, 18)
-                        .addComponent(jbSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(67, 67, 67)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -161,8 +200,20 @@ public class EspecialidadesForm extends javax.swing.JInternalFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jtEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(60, 60, 60)
-                                .addComponent(jbBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(33, Short.MAX_VALUE))
+                                .addComponent(jbBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addComponent(jbNuevo)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbEliminar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jbGuardar)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbCancelar)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(43, Short.MAX_VALUE))
+            .addComponent(jScrollPane2)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -181,14 +232,15 @@ public class EspecialidadesForm extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(jCheckActivo))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbNuevo)
                     .addComponent(jbEliminar)
                     .addComponent(jbGuardar)
                     .addComponent(jbCancelar)
                     .addComponent(jbSalir))
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -207,14 +259,14 @@ public class EspecialidadesForm extends javax.swing.JInternalFrame {
 
     private void jbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarActionPerformed
         // Método del boton buscar
-        
-        String  tipo = jtEspecialidad.getText();
+
+        String tipo = jtEspecialidad.getText();
         esp = new Especialidad();
         esp = (new EspecialidadData()).buscarEspecialidadPorTipo(tipo);
-        
+
         jtEspecialidad.setText(esp.getTipo());
-        jCheckActivo.setSelected(esp.isActivo());        
-        
+        jCheckActivo.setSelected(esp.isActivo());
+
     }//GEN-LAST:event_jbBuscarActionPerformed
 
     private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
@@ -227,6 +279,7 @@ public class EspecialidadesForm extends javax.swing.JInternalFrame {
         jtEspecialidad.setText("");
         jCheckActivo.setSelected(true);
         jtEspecialidad.requestFocus();
+        jbEliminar.setEnabled(true);
     }//GEN-LAST:event_jbCancelarActionPerformed
 
     private void jbNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNuevoActionPerformed
@@ -235,49 +288,108 @@ public class EspecialidadesForm extends javax.swing.JInternalFrame {
         jCheckActivo.setSelected(true);
         jtEspecialidad.requestFocus();
         nuevo = true;
+        jbEliminar.setEnabled(false);
     }//GEN-LAST:event_jbNuevoActionPerformed
 
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
         // Método del boton Guardar
-        
-        EspecialidadData especialidad = new EspecialidadData();
-        esp.setTipo(jtEspecialidad.getText());
-        esp.setActivo(jCheckActivo.isSelected());
-        
-        if (nuevo) {
-           especialidad.guardarEspecialidad(esp);
-            
-        } else {
-           especialidad.modificarEspecialidad(esp);
+
+        String especialidad = jtEspecialidad.getText();
+        boolean activo = jCheckActivo.isSelected();
+
+        if (especialidad.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "EL campo Especialidad esta vacio.");
+            jtEspecialidad.requestFocus();
+            return;
         }
-        
+
+        if (nuevo == true && activo == false) {
+            //JOptionPane.showMessageDialog(null, ".");
+            activo = true;
+        }
+
+        EspecialidadData espe = new EspecialidadData();
+        esp.setTipo(jtEspecialidad.getText());
+        esp.setActivo(activo);
+
+        if (nuevo) {
+            espe.guardarEspecialidad(esp);
+
+        } else {
+
+            int opcion = JOptionPane.showConfirmDialog(
+                    null,
+                    "¿Desea actualizar el tipo de especialidad a " + especialidad + "?",
+                    "Confirmación",
+                    JOptionPane.YES_NO_OPTION
+            );
+            if (opcion == JOptionPane.YES_OPTION) {
+                espe.modificarEspecialidad(esp);
+            }
+
+        }
+
         jtEspecialidad.setText("");
         jCheckActivo.setSelected(true);
         jtEspecialidad.requestFocus();
-        nuevo = false;        
+        nuevo = false;
+        borrraFilasTabla();
+        cargarTablaEspecialidad();
+        esp = new Especialidad();
+        jbEliminar.setEnabled(true);
     }//GEN-LAST:event_jbGuardarActionPerformed
 
     private void jbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarActionPerformed
         // Método del boton Eliminar
-        int opcion = JOptionPane.showConfirmDialog(
-                null,
-                "¿Desea eliminar la especialidad : " + jtEspecialidad.getText() + "?",
-                "Confirmación",
-                JOptionPane.YES_NO_OPTION
-        );
 
-        if (opcion == JOptionPane.YES_OPTION) {
+        int filaSeleccionada = tablaEspecialidad.getSelectedRow();
 
-            (new EspecialidadData()).eliminarEspecialidad(esp.getIdCodigo());
+        if (filaSeleccionada != -1) {
 
-        } else {
-            // El usuario eligió no eliminar al alumno
+            int _codigo = (int) tablaEspecialidad.getValueAt(filaSeleccionada, 0);
+            String _especialidad = (String) tablaEspecialidad.getValueAt(filaSeleccionada, 1);
+
+            int opcion = JOptionPane.showConfirmDialog(
+                    null,
+                    "¿Desea eliminar la especialidad : " + _especialidad + "?",
+                    "Confirmación",
+                    JOptionPane.YES_NO_OPTION
+            );
+            if (opcion == JOptionPane.YES_OPTION) {
+
+                (new EspecialidadData()).eliminarEspecialidad(_codigo);
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Debe selecionar una especialidad.");
         }
         jtEspecialidad.setText("");
         jCheckActivo.setSelected(true);
         jtEspecialidad.requestFocus();
-        nuevo = false;    
+        nuevo = false;
+        borrraFilasTabla();
+        cargarTablaEspecialidad();
     }//GEN-LAST:event_jbEliminarActionPerformed
+
+    private void tablaEspecialidadMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaEspecialidadMouseClicked
+        // Método clic de la tabla
+
+        if (SwingUtilities.isRightMouseButton(evt)) {
+            // Mostrar el menú contextual al hacer clic derecho
+            JPopupMenu menu = new JPopupMenu();
+            JMenuItem editarItem = new JMenuItem("Editar");
+            editarItem.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent evt) {
+                    int filaSeleccionada = tablaEspecialidad.getSelectedRow();
+                    jtEspecialidad.setText((modelo.getValueAt(filaSeleccionada, 1)).toString());
+                    esp.setIdCodigo((int) modelo.getValueAt(filaSeleccionada, 0));
+                }
+            });
+            menu.add(editarItem);
+            menu.show(tablaEspecialidad, evt.getX(), evt.getY());
+        }
+    }//GEN-LAST:event_tablaEspecialidadMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -287,6 +399,9 @@ public class EspecialidadesForm extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
     private javax.swing.JButton jbBuscar;
     private javax.swing.JButton jbCancelar;
     private javax.swing.JButton jbEliminar;
@@ -294,5 +409,37 @@ public class EspecialidadesForm extends javax.swing.JInternalFrame {
     private javax.swing.JButton jbNuevo;
     private javax.swing.JButton jbSalir;
     private javax.swing.JTextField jtEspecialidad;
+    private javax.swing.JTable tablaEspecialidad;
     // End of variables declaration//GEN-END:variables
+
+    private void cargarCabecera() {
+        modelo.addColumn("Código");
+        modelo.addColumn("Tipo");
+        modelo.addColumn("Activo");
+        tablaEspecialidad.setModel(modelo);
+    }
+
+    private void cargarTablaEspecialidad() {
+
+        EspecialidadData esp = new EspecialidadData();
+
+        for (Especialidad item : esp.listarEspecialidad()) {
+            Object[] fila = {
+                item.getIdCodigo(),
+                item.getTipo(),
+                item.isActivo() ? "Activo" : "Baja"
+            };
+            modelo.addRow(fila);
+        }
+    }
+
+    private void borrraFilasTabla() {
+
+        int numFilas = modelo.getRowCount();
+
+        for (int i = numFilas - 1; i >= 0; i--) {
+            modelo.removeRow(i);
+        }
+    }
+
 }

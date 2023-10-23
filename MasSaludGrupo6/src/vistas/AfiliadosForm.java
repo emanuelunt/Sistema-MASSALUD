@@ -8,6 +8,7 @@ import accesoADatos.AfiliadoData;
 import entidades.Afiliado;
 import java.sql.Date;
 import java.time.LocalDate;
+import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
 
 /**
@@ -48,7 +49,7 @@ public class AfiliadosForm extends javax.swing.JInternalFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jbNuevo = new javax.swing.JButton();
-        jbAliminar = new javax.swing.JButton();
+        jbEliminar = new javax.swing.JButton();
         jbGuardar = new javax.swing.JButton();
         jbCancelar = new javax.swing.JButton();
         jbSalir = new javax.swing.JButton();
@@ -91,19 +92,38 @@ public class AfiliadosForm extends javax.swing.JInternalFrame {
         jLabel3.setText("Nombre:");
 
         jtApellido.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jtApellido.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtApellidoKeyTyped(evt);
+            }
+        });
 
         jtNombre.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jtNombre.setFocusable(false);
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("DNI:");
 
         jtDni.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jtDni.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtDniKeyTyped(evt);
+            }
+        });
 
         jtDomicilio.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jtTelefono.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jtTelefono.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtTelefonoActionPerformed(evt);
+            }
+        });
+        jtTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtTelefonoKeyTyped(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
@@ -125,11 +145,11 @@ public class AfiliadosForm extends javax.swing.JInternalFrame {
             }
         });
 
-        jbAliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/eliminar.png"))); // NOI18N
-        jbAliminar.setText("Eliminar");
-        jbAliminar.addActionListener(new java.awt.event.ActionListener() {
+        jbEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/eliminar.png"))); // NOI18N
+        jbEliminar.setText("Eliminar");
+        jbEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbAliminarActionPerformed(evt);
+                jbEliminarActionPerformed(evt);
             }
         });
 
@@ -204,7 +224,7 @@ public class AfiliadosForm extends javax.swing.JInternalFrame {
                 .addGap(23, 23, 23)
                 .addComponent(jbNuevo)
                 .addGap(18, 18, 18)
-                .addComponent(jbAliminar)
+                .addComponent(jbEliminar)
                 .addGap(18, 18, 18)
                 .addComponent(jbGuardar)
                 .addGap(18, 18, 18)
@@ -247,7 +267,7 @@ public class AfiliadosForm extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jbGuardar)
-                    .addComponent(jbAliminar)
+                    .addComponent(jbEliminar)
                     .addComponent(jbCancelar)
                     .addComponent(jbSalir)
                     .addComponent(jbNuevo))
@@ -281,7 +301,7 @@ public class AfiliadosForm extends javax.swing.JInternalFrame {
         jtDomicilio.setText(afiliado.getDomicilio());
         jtTelefono.setText(afiliado.getTelefono());
         jcheckActivo.setSelected(afiliado.isActivo());
-        
+
         //System.out.println(afiliado.toString());
 
     }//GEN-LAST:event_jbBuscarActionPerformed
@@ -295,44 +315,97 @@ public class AfiliadosForm extends javax.swing.JInternalFrame {
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
         // Método del boton guardar
 
+        String apellido = jtApellido.getText();
+        String nombre = jtNombre.getText();
+        String dni = jtDni.getText();
+        String domicilio = jtDomicilio.getText();
+        String telefono = jtTelefono.getText();
+
+        if (apellido.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "EL campo Apellido esta vacio.");
+            jtApellido.requestFocus();
+            return;
+        }
+        if (nombre.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "EL campo Nombre esta vacio.");
+            jtNombre.requestFocus();
+            return;
+        }
+
+        if (dni.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "EL campo DNI esta vacio.");
+            jtDni.requestFocus();
+            return;
+        }
+        if (domicilio.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "EL campo Domicilio esta vacio.");
+            jtDomicilio.requestFocus();
+            return;
+        }
+        if (telefono.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "EL campo Teléfono esta vacio.");
+            jtTelefono.requestFocus();
+            return;
+        }
+
         AfiliadoData guardar = new AfiliadoData();
-       // Afiliado afiliado = new Afiliado();
-        afiliado.setApellido(jtApellido.getText());
-        afiliado.setNombre(jtNombre.getText());
-        afiliado.setDni(jtDni.getText());
-        afiliado.setDomicilio(jtDomicilio.getText());
-        afiliado.setTelefono(jtTelefono.getText());
+        // Afiliado afiliado = new Afiliado();
+        afiliado.setApellido(apellido);
+        afiliado.setNombre(nombre);
+        afiliado.setDni(dni);
+        afiliado.setDomicilio(domicilio);
+        afiliado.setTelefono(telefono);
         afiliado.setActivo(jcheckActivo.isSelected());
-        
+
         if (nuevo) {
             guardar.guardarAfiliado(afiliado);
-            
+
         } else {
-            guardar.modificarAfiliado(afiliado);
+            int opcion = JOptionPane.showConfirmDialog(
+                    null,
+                    "¿Desea actualizar los datos del alumno con DNI " + dni + "?",
+                    "Confirmación",
+                    JOptionPane.YES_NO_OPTION
+            );
+            if (opcion == JOptionPane.YES_OPTION) {
+                guardar.modificarAfiliado(afiliado);
+            }
+
         }
+        limpiparControles();
         nuevo = false;
     }//GEN-LAST:event_jbGuardarActionPerformed
 
-    private void jbAliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAliminarActionPerformed
+    private void jbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarActionPerformed
         // Método Eliminar por id del afiliado
 
-        int opcion = JOptionPane.showConfirmDialog(
-                null,
-                "¿Desea eliminar el afiliado con DNI " + afiliado.getDni() + "?",
-                "Confirmación",
-                JOptionPane.YES_NO_OPTION
-        );
+        String dni = jtDni.getText();
 
-        if (opcion == JOptionPane.YES_OPTION) {
-
-            (new AfiliadoData()).eliminarAfiliado(afiliado.getIdAfiliado());
-
+        if (dni.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Para eliminar un afiliado debe ingresar un dni");
+            jtDni.requestFocus();
+            return;
         } else {
-            // El usuario eligió no eliminar al alumno
+
+            int opcion = JOptionPane.showConfirmDialog(
+                    null,
+                    "¿Desea Eliminar los datos del afiliado con DNI " + dni + " ?",
+                    "Confirmación",
+                    JOptionPane.YES_NO_OPTION
+            );
+
+            //JOptionPane.showMessageDialog(null, "EL campo Teléfono esta vacio.");
+            if (opcion == JOptionPane.YES_OPTION) {
+
+                (new AfiliadoData()).eliminarAfiliado(afiliado.getIdAfiliado());
+
+            } else {
+                // El usuario eligió no eliminar al alumno
+            }
+
         }
-
-
-    }//GEN-LAST:event_jbAliminarActionPerformed
+        limpiparControles();
+    }//GEN-LAST:event_jbEliminarActionPerformed
 
     private void jbCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCancelarActionPerformed
         // Método del boton cancelar
@@ -343,6 +416,45 @@ public class AfiliadosForm extends javax.swing.JInternalFrame {
         // Método del boton salir
         this.dispose();
     }//GEN-LAST:event_jbSalirActionPerformed
+
+    private void jtDniKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtDniKeyTyped
+        // mètodo de la caja de texto dni, no permite el infreso de nùmeros
+        int key = evt.getKeyChar();
+        boolean numero = key >= 48 && key <= 57;
+        if (!numero) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_jtDniKeyTyped
+
+    private void jtApellidoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtApellidoKeyTyped
+        // Mètodo de la caja de texto apellido
+        int key = evt.getKeyChar();
+        //boolean numero = key >= 48 && key <= 57;
+
+        JDesktopPane desktopPane = this.getDesktopPane();
+
+        if (key == 10) {
+
+            BusquedaApellidoForm busqueda = new BusquedaApellidoForm();
+            desktopPane.add(busqueda);
+            busqueda.setVisible(true);
+            JOptionPane.showMessageDialog(null, "Enter precionado " + key);
+            evt.consume();
+        }
+    }//GEN-LAST:event_jtApellidoKeyTyped
+
+    private void jtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtTelefonoKeyTyped
+        // Método de la caja de texto del teléfono
+        int key = evt.getKeyChar();
+        boolean numero = key >= 48 && key <= 57;
+        if (!numero) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_jtTelefonoKeyTyped
+
+    private void jtTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtTelefonoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtTelefonoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -355,9 +467,9 @@ public class AfiliadosForm extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JButton jbAliminar;
     private javax.swing.JButton jbBuscar;
     private javax.swing.JButton jbCancelar;
+    private javax.swing.JButton jbEliminar;
     private javax.swing.JButton jbGuardar;
     private javax.swing.JButton jbNuevo;
     private javax.swing.JButton jbSalir;
@@ -380,7 +492,7 @@ public class AfiliadosForm extends javax.swing.JInternalFrame {
 
         jtApellido.requestFocus();
     }
-    
+
     private void limpiparControles() {
 
         jtApellido.setText("");

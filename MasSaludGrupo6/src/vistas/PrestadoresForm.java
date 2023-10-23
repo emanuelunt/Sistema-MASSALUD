@@ -5,8 +5,11 @@
 package vistas;
 
 import accesoADatos.EspecialidadData;
+import accesoADatos.PrestadorData;
 import entidades.Especialidad;
+import entidades.Prestador;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -15,10 +18,13 @@ import javax.swing.DefaultComboBoxModel;
 public class PrestadoresForm extends javax.swing.JInternalFrame {
 
     DefaultComboBoxModel<String> modeloCombo = new DefaultComboBoxModel<>();
-    
+    private boolean nuevo = true;
+    private Prestador _prestador = new Prestador();
+
     public PrestadoresForm() {
         initComponents();
-        
+        LlenarCombo();
+
     }
 
     /**
@@ -113,18 +119,43 @@ public class PrestadoresForm extends javax.swing.JInternalFrame {
         jLabel3.setText("Nombre:");
 
         jtApellido.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jtApellido.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtApellidoKeyTyped(evt);
+            }
+        });
 
         jtNombre.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtNombreKeyTyped(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("DNI:");
 
         jtDni.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jtDni.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtDniKeyTyped(evt);
+            }
+        });
 
         jtDomicilio.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jtDomicilio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtDomicilioKeyTyped(evt);
+            }
+        });
 
         jtTelefono.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jtTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtTelefonoKeyTyped(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
@@ -151,9 +182,19 @@ public class PrestadoresForm extends javax.swing.JInternalFrame {
 
         jbGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/Save_37110.png"))); // NOI18N
         jbGuardar.setText("Guardar");
+        jbGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbGuardarActionPerformed(evt);
+            }
+        });
 
         jbCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/cancel_77947.png"))); // NOI18N
         jbCancelar.setText("Cancelar");
+        jbCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbCancelarActionPerformed(evt);
+            }
+        });
 
         jbSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/salida.png"))); // NOI18N
         jbSalir.setText("Salir");
@@ -217,17 +258,15 @@ public class PrestadoresForm extends javax.swing.JInternalFrame {
                             .addComponent(jcListaEspecialidades, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jtDomicilio, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addComponent(jtDni, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jtNombre, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jtApellido, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE))
-                                        .addGap(32, 32, 32)
-                                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jtDni, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jtTelefono, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jtApellido, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
+                                    .addComponent(jtNombre, javax.swing.GroupLayout.Alignment.LEADING))
                                 .addGap(0, 0, Short.MAX_VALUE)))
-                        .addGap(300, 300, 300))))
+                        .addGap(7, 7, 7)
+                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(253, 253, 253))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -238,11 +277,12 @@ public class PrestadoresForm extends javax.swing.JInternalFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(jtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(83, 83, 83)
+                            .addComponent(jtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 7, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton7)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -286,7 +326,7 @@ public class PrestadoresForm extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 4, Short.MAX_VALUE))
         );
 
         pack();
@@ -303,9 +343,140 @@ public class PrestadoresForm extends javax.swing.JInternalFrame {
 
     private void jbNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNuevoActionPerformed
         // Método del botn nuevo
-        LlenarCombo();
+        //LlenarCombo();
         limpiparControles();
+        jbEliminar.setEnabled(false);
     }//GEN-LAST:event_jbNuevoActionPerformed
+
+    private void jbCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCancelarActionPerformed
+        // Método boton cancelar
+        jbEliminar.setEnabled(true);
+        limpiparControles();
+    }//GEN-LAST:event_jbCancelarActionPerformed
+
+    private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
+        // Métod del Boton Guardad
+
+        String apellido = jtApellido.getText();
+        String nombre = jtNombre.getText();
+        String dni = jtDni.getText();
+        String domicilio = jtDomicilio.getText();
+        String telefono = jtTelefono.getText();
+        boolean acti;
+        String nombreEspecialdiad;
+        Especialidad _espe;
+
+        if (apellido.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "EL campo Apellido esta vacio.");
+            jtApellido.requestFocus();
+            return;
+        }
+
+        if (nombre.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "EL campo Nombre esta vacio.");
+            jtNombre.requestFocus();
+            return;
+        }
+        if (dni.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "EL campo dni esta vacio.");
+            jtDni.requestFocus();
+            return;
+        }
+        if (domicilio.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "EL campo domicilio esta vacio.");
+            jtDomicilio.requestFocus();
+            return;
+        }
+
+        if (telefono.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "EL campo Teléfono esta vacio.");
+            jtTelefono.requestFocus();
+            return;
+        }
+
+        Object elementoSeleccionado = jcListaEspecialidades.getSelectedItem();
+
+        if (elementoSeleccionado != null) {
+
+            nombreEspecialdiad = elementoSeleccionado.toString();
+            String[] partes = nombreEspecialdiad.split("-");
+            String _tipo = partes[1];
+            
+            _espe  =  (new EspecialidadData()).buscarEspecialidadPorTipo(_tipo);          
+            
+        } else {
+            
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una especialidad.");
+            jcListaEspecialidades.requestFocus();
+            return;
+        }
+        
+        if(nuevo == true && jCheckActivo.isSelected() == false){
+           acti = true;
+        }
+        
+        _prestador.setApellido(apellido);
+        _prestador.setNombre(nombre);
+        _prestador.setDni(dni);
+        _prestador.setDomicilio(domicilio);
+        _prestador.setTelefono(telefono);
+       _prestador.setEspecialidad(_espe);
+       //_prestador.setActivo(acti);
+        
+        
+        
+        if(nuevo){ // nueva prestador
+            
+            (new PrestadorData()).guardarPrestador(_prestador);
+        }
+        
+
+    }//GEN-LAST:event_jbGuardarActionPerformed
+
+    private void jtDniKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtDniKeyTyped
+        // Método del teclado del la caja de dni
+        int key = evt.getKeyChar();
+        boolean numero = key >= 48 && key <= 57;
+        if (!numero) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_jtDniKeyTyped
+
+    private void jtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtTelefonoKeyTyped
+        // Método de del teclado de la caje de teléfono
+        int key = evt.getKeyChar();
+        boolean numero = key >= 48 && key <= 57;
+        if (!numero) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_jtTelefonoKeyTyped
+
+    private void jtApellidoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtApellidoKeyTyped
+         // Mètodo no permite ingresar nùmeros (Control apellido)
+        int key = evt.getKeyChar();
+        boolean numero = (key >= 65 && key <= 90) || (key >= 97 && key <= 122) ;
+        if (!numero){
+	evt.consume();
+         }
+    }//GEN-LAST:event_jtApellidoKeyTyped
+
+    private void jtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtNombreKeyTyped
+        // Mètodo no permite ingresar nùmeros (Control nombre)
+        int key = evt.getKeyChar();
+        boolean numero = (key >= 65 && key <= 90) || (key >= 97 && key <= 122) ;
+        if (!numero){
+	evt.consume();
+         }
+    }//GEN-LAST:event_jtNombreKeyTyped
+
+    private void jtDomicilioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtDomicilioKeyTyped
+        /// Mètodo no permite ingresar nùmeros (Control domicilio)
+        int key = evt.getKeyChar();
+        boolean numero = (key >= 65 && key <= 90) || (key >= 97 && key <= 122) ;
+        if (!numero){
+	evt.consume();
+         }
+    }//GEN-LAST:event_jtDomicilioKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -339,12 +510,12 @@ public class PrestadoresForm extends javax.swing.JInternalFrame {
     private void LlenarCombo() {
 
         for (Especialidad espec : (new EspecialidadData()).listarEspecialidad()) {
-            String representacion = espec.getIdCodigo() + " - " + espec.getTipo();
+            String representacion = espec.getIdCodigo() + "-" + espec.getTipo();
             modeloCombo.addElement(representacion);
         }
         jcListaEspecialidades.setModel(modeloCombo);
     }
-    
+
     private void limpiparControles() {
 
         jtApellido.setText("");

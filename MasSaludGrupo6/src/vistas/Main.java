@@ -43,8 +43,8 @@ public class Main extends javax.swing.JFrame {
         OrdenPanelButton = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        PrestadorPanelButton = new javax.swing.JPanel();
         Escritorio = new javax.swing.JPanel();
+        PrestadorPanelButton = new javax.swing.JPanel();
 
         jTextField1.setText("jTextField1");
 
@@ -237,7 +237,21 @@ public class Main extends javax.swing.JFrame {
                 .addComponent(EspecialidadPanelButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
                 .addComponent(ConsultasPanelButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(64, Short.MAX_VALUE))
+                .addContainerGap(39, Short.MAX_VALUE))
+        );
+
+        Escritorio.setOpaque(false);
+        Escritorio.setPreferredSize(new java.awt.Dimension(800, 500));
+
+        javax.swing.GroupLayout EscritorioLayout = new javax.swing.GroupLayout(Escritorio);
+        Escritorio.setLayout(EscritorioLayout);
+        EscritorioLayout.setHorizontalGroup(
+            EscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 685, Short.MAX_VALUE)
+        );
+        EscritorioLayout.setVerticalGroup(
+            EscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 590, Short.MAX_VALUE)
         );
 
         PrestadorPanelButton.setOpaque(false);
@@ -264,20 +278,6 @@ public class Main extends javax.swing.JFrame {
             .addGap(0, 119, Short.MAX_VALUE)
         );
 
-        Escritorio.setOpaque(false);
-        Escritorio.setPreferredSize(new java.awt.Dimension(800, 500));
-
-        javax.swing.GroupLayout EscritorioLayout = new javax.swing.GroupLayout(Escritorio);
-        Escritorio.setLayout(EscritorioLayout);
-        EscritorioLayout.setHorizontalGroup(
-            EscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 685, Short.MAX_VALUE)
-        );
-        EscritorioLayout.setVerticalGroup(
-            EscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
         javax.swing.GroupLayout BackgroundLayout = new javax.swing.GroupLayout(Background);
         Background.setLayout(BackgroundLayout);
         BackgroundLayout.setHorizontalGroup(
@@ -292,19 +292,19 @@ public class Main extends javax.swing.JFrame {
         );
         BackgroundLayout.setVerticalGroup(
             BackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(BackgroundLayout.createSequentialGroup()
-                .addGap(120, 120, 120)
-                .addComponent(PrestadorPanelButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(Escritorio, javax.swing.GroupLayout.DEFAULT_SIZE, 590, Short.MAX_VALUE)
             .addComponent(MenuBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(BackgroundLayout.createSequentialGroup()
+                .addGap(162, 162, 162)
+                .addComponent(PrestadorPanelButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Background, javax.swing.GroupLayout.PREFERRED_SIZE, 942, Short.MAX_VALUE)
+            .addComponent(Background, javax.swing.GroupLayout.DEFAULT_SIZE, 1138, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -335,27 +335,6 @@ public class Main extends javax.swing.JFrame {
         OrdenPanelButton.setBackground(new Color(144,12,63));
         OrdenPanelButton.setOpaque(true);
     }//GEN-LAST:event_OrdenPanelButtonMouseEntered
-
-    private void PrestadorPanelButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PrestadorPanelButtonMousePressed
-        // TODO add your handling code here:
-        Escritorio.removeAll();
-        Escritorio.repaint();
-        PrestadoresForm pf = new PrestadoresForm();
-        Escritorio.add(pf);
-        pf.setVisible(true);
-    }//GEN-LAST:event_PrestadorPanelButtonMousePressed
-
-    private void PrestadorPanelButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PrestadorPanelButtonMouseExited
-        // TODO add your handling code here:
-        PrestadorPanelButton.setBackground(null);
-        PrestadorPanelButton.setOpaque(false);
-    }//GEN-LAST:event_PrestadorPanelButtonMouseExited
-
-    private void PrestadorPanelButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PrestadorPanelButtonMouseEntered
-        // TODO add your handling code here:
-        PrestadorPanelButton.setBackground(new Color(144,12,63));
-        PrestadorPanelButton.setOpaque(true);
-    }//GEN-LAST:event_PrestadorPanelButtonMouseEntered
 
     private void AfiliadoPanelButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AfiliadoPanelButtonMousePressed
         // TODO add your handling code here:
@@ -419,6 +398,27 @@ public class Main extends javax.swing.JFrame {
         ConsultasPanelButton.setBackground(new Color(144,12,63));
         ConsultasPanelButton.setOpaque(true);
     }//GEN-LAST:event_ConsultasPanelButtonMouseEntered
+
+    private void PrestadorPanelButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PrestadorPanelButtonMousePressed
+        // TODO add your handling code here:
+        Escritorio.removeAll();
+        Escritorio.repaint();
+        PrestadoresForm pf = new PrestadoresForm();
+        Escritorio.add(pf);
+        pf.setVisible(true);
+    }//GEN-LAST:event_PrestadorPanelButtonMousePressed
+
+    private void PrestadorPanelButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PrestadorPanelButtonMouseExited
+        // TODO add your handling code here:
+        PrestadorPanelButton.setBackground(null);
+        PrestadorPanelButton.setOpaque(false);
+    }//GEN-LAST:event_PrestadorPanelButtonMouseExited
+
+    private void PrestadorPanelButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PrestadorPanelButtonMouseEntered
+        // TODO add your handling code here:
+        PrestadorPanelButton.setBackground(new Color(144,12,63));
+        PrestadorPanelButton.setOpaque(true);
+    }//GEN-LAST:event_PrestadorPanelButtonMouseEntered
 
     /**
      * @param args the command line arguments
