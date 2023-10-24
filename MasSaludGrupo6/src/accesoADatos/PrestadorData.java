@@ -149,7 +149,7 @@ public class PrestadorData {
         Prestador prestador = null;
         Especialidad especialidad = null;
 
-        String sql = "SELECT idPrestador,apellido,nombre,dni,domicilio,telefono,id_especialidad,tipo,activo FROM prestadores JOIN especialidades ON id_especialidad = idCodigo WHERE dni = ? AND activo = 1;";
+        String sql = "SELECT idPrestador,apellido,nombre,dni,domicilio,telefono,id_especialidad,tipo,prestadores.activo FROM prestadores JOIN especialidades ON id_especialidad = idCodigo WHERE prestadores.dni = ? AND prestadores.activo = 1;";
         PreparedStatement ps = null;
 
         try {
@@ -172,7 +172,7 @@ public class PrestadorData {
                 prestador.setDomicilio(rs.getString("domicilio"));
                 prestador.setTelefono(rs.getString("telefono"));
                 prestador.setEspecialidad(especialidad);                
-                prestador.setActivo(rs.getBoolean("activo")); 
+               // prestador.setActivo(rs.getBoolean("activo")); 
                 
             } else {
                 JOptionPane.showMessageDialog(null, "No existe el prestador!");

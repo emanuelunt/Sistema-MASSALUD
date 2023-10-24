@@ -24,6 +24,9 @@ public class PrestadoresForm extends javax.swing.JInternalFrame {
     public PrestadoresForm() {
         initComponents();
         LlenarCombo();
+        jbGuardar.setEnabled(false);
+        jbCancelar.setEnabled(false);
+        jbEliminar.setEnabled(false);
 
     }
 
@@ -57,7 +60,7 @@ public class PrestadoresForm extends javax.swing.JInternalFrame {
         jbGuardar = new javax.swing.JButton();
         jbCancelar = new javax.swing.JButton();
         jbSalir = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
+        jbBuscar = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         jcListaEspecialidades = new javax.swing.JComboBox<>();
         jCheckActivo = new javax.swing.JCheckBox();
@@ -84,6 +87,8 @@ public class PrestadoresForm extends javax.swing.JInternalFrame {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20))
         );
+
+        setClosable(true);
 
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
 
@@ -119,6 +124,11 @@ public class PrestadoresForm extends javax.swing.JInternalFrame {
         jLabel3.setText("Nombre:");
 
         jtApellido.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jtApellido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtApellidoActionPerformed(evt);
+            }
+        });
         jtApellido.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jtApellidoKeyTyped(evt);
@@ -204,10 +214,10 @@ public class PrestadoresForm extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/buscar.png"))); // NOI18N
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
+        jbBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/buscar.png"))); // NOI18N
+        jbBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
+                jbBuscarActionPerformed(evt);
             }
         });
 
@@ -256,63 +266,62 @@ public class PrestadoresForm extends javax.swing.JInternalFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jcListaEspecialidades, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jtDomicilio, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jtDni, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jtTelefono, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jtApellido, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
-                                    .addComponent(jtNombre, javax.swing.GroupLayout.Alignment.LEADING))
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addGap(7, 7, 7)
-                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(253, 253, 253))))
+                            .addComponent(jtDomicilio, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addGap(300, 300, 300))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jtDni, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtTelefono, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtApellido, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
+                            .addComponent(jtNombre, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addGap(36, 36, 36)
+                        .addComponent(jbBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(jtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 7, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton7)))
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 25, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jtDni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(jtDomicilio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jtTelefono, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jcListaEspecialidades, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel8)
-                    .addComponent(jCheckActivo))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbNuevo)
-                    .addComponent(jbEliminar)
-                    .addComponent(jbGuardar)
-                    .addComponent(jbCancelar)
-                    .addComponent(jbSalir))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(jtDni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(jtDomicilio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jtTelefono, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(25, 25, 25)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jcListaEspecialidades, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel8)
+                            .addComponent(jCheckActivo))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jbNuevo)
+                            .addComponent(jbEliminar)
+                            .addComponent(jbGuardar)
+                            .addComponent(jbCancelar)
+                            .addComponent(jbSalir)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(jbBuscar)))
                 .addContainerGap())
         );
 
@@ -332,9 +341,48 @@ public class PrestadoresForm extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton7ActionPerformed
+    private void jbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarActionPerformed
+        // Método del boton Buscar
+        nuevo = false; // se habilita la modificacion
+
+        String _dni = jtDni.getText();
+        jtDni.setText("");
+        if (_dni.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Para buscar el campo dni no debe estar vacio.");
+            jtDni.requestFocus();
+            return;
+        }
+
+        //Prestador = new Prestador();
+        _prestador = new Prestador();
+        _prestador = (new PrestadorData()).buscarPrestadorPorDni(_dni);
+
+        if (_prestador != null) {
+            jbNuevo.setEnabled(false);
+            jbEliminar.setEnabled(true);
+            jbGuardar.setEnabled(true);
+            jbCancelar.setEnabled(true);
+            jtApellido.requestFocus();
+            
+            jtApellido.setText(_prestador.getApellido());
+            jtNombre.setText(_prestador.getNombre());
+            jtDni.setText(_prestador.getDni());
+            jtDomicilio.setText(_prestador.getDomicilio());
+            jtTelefono.setText(_prestador.getTelefono());
+            
+            String _tipo = _prestador.getEspecialidad().getIdCodigo() + "-"+ _prestador.getEspecialidad().getTipo();
+            jcListaEspecialidades.setSelectedItem(_tipo);
+            
+            //System.out.println(_prestador.getEspecialidad().toString());
+            
+            
+        }
+        else{
+             jtDni.requestFocus();
+        }
+
+
+    }//GEN-LAST:event_jbBuscarActionPerformed
 
     private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
         // Método del boton salir
@@ -345,12 +393,19 @@ public class PrestadoresForm extends javax.swing.JInternalFrame {
         // Método del botn nuevo
         //LlenarCombo();
         limpiparControles();
+        jbNuevo.setEnabled(false);
         jbEliminar.setEnabled(false);
+        jbGuardar.setEnabled(true);
+        jbCancelar.setEnabled(true);
+
     }//GEN-LAST:event_jbNuevoActionPerformed
 
     private void jbCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCancelarActionPerformed
         // Método boton cancelar
-        jbEliminar.setEnabled(true);
+        jbEliminar.setEnabled(false);
+        jbGuardar.setEnabled(false);
+        jbCancelar.setEnabled(false);
+        jbNuevo.setEnabled(true);
         limpiparControles();
     }//GEN-LAST:event_jbCancelarActionPerformed
 
@@ -401,36 +456,51 @@ public class PrestadoresForm extends javax.swing.JInternalFrame {
             nombreEspecialdiad = elementoSeleccionado.toString();
             String[] partes = nombreEspecialdiad.split("-");
             String _tipo = partes[1];
-            
-            _espe  =  (new EspecialidadData()).buscarEspecialidadPorTipo(_tipo);          
-            
+
+            _espe = (new EspecialidadData()).buscarEspecialidadPorTipo(_tipo);
+
         } else {
-            
+
             JOptionPane.showMessageDialog(null, "Debe seleccionar una especialidad.");
             jcListaEspecialidades.requestFocus();
             return;
         }
-        
-        if(nuevo == true && jCheckActivo.isSelected() == false){
-           acti = true;
+
+        if (nuevo == true && jCheckActivo.isSelected() == false) {
+            acti = true;
         }
-        
+
         _prestador.setApellido(apellido);
         _prestador.setNombre(nombre);
         _prestador.setDni(dni);
         _prestador.setDomicilio(domicilio);
         _prestador.setTelefono(telefono);
-       _prestador.setEspecialidad(_espe);
-       //_prestador.setActivo(acti);
-        
-        
-        
-        if(nuevo){ // nueva prestador
-            
-            (new PrestadorData()).guardarPrestador(_prestador);
-        }
-        
+        _prestador.setEspecialidad(_espe);
+        _prestador.setActivo(true);
 
+        if (nuevo) { // nueva prestador
+
+            (new PrestadorData()).guardarPrestador(_prestador);
+        } else {
+
+            int opcion = JOptionPane.showConfirmDialog(
+                    null,
+                    "¿Desea actualizar los datos del prestador con DNI " + dni + "?",
+                    "Confirmación",
+                    JOptionPane.YES_NO_OPTION
+            );
+            if (opcion == JOptionPane.YES_OPTION) {
+
+                (new PrestadorData()).modificarPrestador(_prestador);
+                jbEliminar.setEnabled(false);
+                jbGuardar.setEnabled(false);
+                jbCancelar.setEnabled(false);
+                jbNuevo.setEnabled(true);
+            }
+        }
+
+        limpiparControles();
+        nuevo = false;
     }//GEN-LAST:event_jbGuardarActionPerformed
 
     private void jtDniKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtDniKeyTyped
@@ -445,42 +515,45 @@ public class PrestadoresForm extends javax.swing.JInternalFrame {
     private void jtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtTelefonoKeyTyped
         // Método de del teclado de la caje de teléfono
         int key = evt.getKeyChar();
-        boolean numero = key >= 48 && key <= 57;
+        boolean numero = key >= 48 && key <= 57 || (key == 32);
         if (!numero) {
             evt.consume();
         }
     }//GEN-LAST:event_jtTelefonoKeyTyped
 
     private void jtApellidoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtApellidoKeyTyped
-         // Mètodo no permite ingresar nùmeros (Control apellido)
+        // Mètodo no permite ingresar nùmeros (Control apellido)
         int key = evt.getKeyChar();
-        boolean numero = (key >= 65 && key <= 90) || (key >= 97 && key <= 122) ;
-        if (!numero){
-	evt.consume();
-         }
+        boolean numero = (key >= 65 && key <= 90) || (key >= 97 && key <= 122) || (key == 32);
+        if (!numero) {
+            evt.consume();
+        }
     }//GEN-LAST:event_jtApellidoKeyTyped
 
     private void jtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtNombreKeyTyped
         // Mètodo no permite ingresar nùmeros (Control nombre)
         int key = evt.getKeyChar();
-        boolean numero = (key >= 65 && key <= 90) || (key >= 97 && key <= 122) ;
-        if (!numero){
-	evt.consume();
-         }
+        boolean numero = (key >= 65 && key <= 90) || (key >= 97 && key <= 122) || (key == 32);
+        if (!numero) {
+            evt.consume();
+        }
     }//GEN-LAST:event_jtNombreKeyTyped
 
     private void jtDomicilioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtDomicilioKeyTyped
         /// Mètodo no permite ingresar nùmeros (Control domicilio)
         int key = evt.getKeyChar();
-        boolean numero = (key >= 65 && key <= 90) || (key >= 97 && key <= 122) ;
-        if (!numero){
-	evt.consume();
-         }
+        boolean numero = (key >= 65 && key <= 90) || (key >= 97 && key <= 122) || (key >= 48 && key <= 57) || (key == 32);
+        if (!numero) {
+            evt.consume();
+        }
     }//GEN-LAST:event_jtDomicilioKeyTyped
+
+    private void jtApellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtApellidoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtApellidoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton7;
     private javax.swing.JCheckBox jCheckActivo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -494,6 +567,7 @@ public class PrestadoresForm extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JButton jbBuscar;
     private javax.swing.JButton jbCancelar;
     private javax.swing.JButton jbEliminar;
     private javax.swing.JButton jbGuardar;
