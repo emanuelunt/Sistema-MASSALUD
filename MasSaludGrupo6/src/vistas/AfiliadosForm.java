@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
 public class AfiliadosForm extends javax.swing.JInternalFrame {
 
     private Afiliado afiliado;
-    private boolean nuevo = false;
+    private boolean nuevo = true;
 
     public AfiliadosForm() {
         initComponents();
@@ -349,13 +349,7 @@ public class AfiliadosForm extends javax.swing.JInternalFrame {
         }
 
         AfiliadoData guardar = new AfiliadoData();
-        // Afiliado afiliado = new Afiliado();
-        afiliado.setApellido(apellido);
-        afiliado.setNombre(nombre);
-        afiliado.setDni(dni);
-        afiliado.setDomicilio(domicilio);
-        afiliado.setTelefono(telefono);
-        afiliado.setActivo(jcheckActivo.isSelected());
+        Afiliado afiliado = new Afiliado(apellido, nombre, dni, domicilio, telefono, true);
 
         if (nuevo) {
             guardar.guardarAfiliado(afiliado);
@@ -372,12 +366,12 @@ public class AfiliadosForm extends javax.swing.JInternalFrame {
             }
 
         }
-        limpiparControles();
+        limpiarControles();
         nuevo = false;
     }//GEN-LAST:event_jbGuardarActionPerformed
 
     private void jbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarActionPerformed
-        // Método Eliminar por id del afiliado
+        // Método Eliminar por id del afiliado        
 
         String dni = jtDni.getText();
 
@@ -396,7 +390,7 @@ public class AfiliadosForm extends javax.swing.JInternalFrame {
 
             //JOptionPane.showMessageDialog(null, "EL campo Teléfono esta vacio.");
             if (opcion == JOptionPane.YES_OPTION) {
-
+                
                 (new AfiliadoData()).eliminarAfiliado(afiliado.getIdAfiliado());
 
             } else {
@@ -404,12 +398,12 @@ public class AfiliadosForm extends javax.swing.JInternalFrame {
             }
 
         }
-        limpiparControles();
+        limpiarControles();
     }//GEN-LAST:event_jbEliminarActionPerformed
 
     private void jbCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCancelarActionPerformed
         // Método del boton cancelar
-        limpiparControles();
+        limpiarControles();
     }//GEN-LAST:event_jbCancelarActionPerformed
 
     private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
@@ -492,16 +486,4 @@ public class AfiliadosForm extends javax.swing.JInternalFrame {
 
         jtApellido.requestFocus();
     }
-
-    private void limpiparControles() {
-
-        jtApellido.setText("");
-        jtNombre.setText("");
-        jtDni.setText("");
-        jtDomicilio.setText("");
-        jtTelefono.setText("");
-        jcheckActivo.setSelected(true);
-        jbNuevo.requestFocus();
-    }
-
 }
