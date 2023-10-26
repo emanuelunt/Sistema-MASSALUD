@@ -189,6 +189,11 @@ public class PrestadoresForm extends javax.swing.JInternalFrame {
 
         jbEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/eliminar.png"))); // NOI18N
         jbEliminar.setText("Eliminar");
+        jbEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbEliminarActionPerformed(evt);
+            }
+        });
 
         jbGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/Save_37110.png"))); // NOI18N
         jbGuardar.setText("Guardar");
@@ -392,11 +397,12 @@ public class PrestadoresForm extends javax.swing.JInternalFrame {
     private void jbNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNuevoActionPerformed
         // Método del botn nuevo
         //LlenarCombo();
-        limpiparControles();
+        limpiarControles();
         jbNuevo.setEnabled(false);
         jbEliminar.setEnabled(false);
         jbGuardar.setEnabled(true);
         jbCancelar.setEnabled(true);
+        jtApellido.requestFocus();
 
     }//GEN-LAST:event_jbNuevoActionPerformed
 
@@ -406,7 +412,7 @@ public class PrestadoresForm extends javax.swing.JInternalFrame {
         jbGuardar.setEnabled(false);
         jbCancelar.setEnabled(false);
         jbNuevo.setEnabled(true);
-        limpiparControles();
+        limpiarControles();
     }//GEN-LAST:event_jbCancelarActionPerformed
 
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
@@ -499,7 +505,7 @@ public class PrestadoresForm extends javax.swing.JInternalFrame {
             }
         }
 
-        limpiparControles();
+        limpiarControles();
         nuevo = false;
     }//GEN-LAST:event_jbGuardarActionPerformed
 
@@ -552,6 +558,40 @@ public class PrestadoresForm extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jtApellidoActionPerformed
 
+    private void jbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarActionPerformed
+        // Método del boton eliminar.
+        
+        String dni = _prestador.getDni();
+
+        if (dni.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Para eliminar un prestador debe ingresar un dni");
+            jtDni.requestFocus();
+            return;
+        } else {
+
+            int opcion = JOptionPane.showConfirmDialog(
+                    null,
+                    "¿Desea Eliminar los datos del prestador con DNI " + dni + " ?",
+                    "Confirmación",
+                    JOptionPane.YES_NO_OPTION
+            );
+
+            //JOptionPane.showMessageDialog(null, "EL campo Teléfono esta vacio.");
+            if (opcion == JOptionPane.YES_OPTION) {
+                              
+                (new PrestadorData()).eliminarPrestador(_prestador.getIdPrestador());               
+
+            } else {
+                // El usuario eligió no eliminar al alumno
+            }
+
+        }
+        limpiarControles();
+        jbEliminar.setEnabled(false);
+        jbGuardar.setEnabled(false);
+        jbNuevo.setEnabled(true);
+    }//GEN-LAST:event_jbEliminarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox jCheckActivo;
@@ -590,7 +630,7 @@ public class PrestadoresForm extends javax.swing.JInternalFrame {
         jcListaEspecialidades.setModel(modeloCombo);
     }
 
-    private void limpiparControles() {
+    private void limpiarControles() {
 
         jtApellido.setText("");
         jtNombre.setText("");
