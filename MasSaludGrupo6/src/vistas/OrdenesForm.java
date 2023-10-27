@@ -4,10 +4,19 @@
  */
 package vistas;
 
+import accesoADatos.AfiliadoData;
 import accesoADatos.MetodoPago;
+import accesoADatos.OrdenData;
+import accesoADatos.PrestadorData;
+import entidades.Afiliado;
+import entidades.Orden;
+import entidades.Prestador;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+import java.util.Random;
 
 /**
  *
@@ -17,12 +26,16 @@ public class OrdenesForm extends javax.swing.JInternalFrame {
 
     private DefaultComboBoxModel<String> modeloCombo = new DefaultComboBoxModel<>();
     private boolean nuevo = true;
-   
+
+    private Afiliado _afiliado;
+    private Prestador _prestador;
+
     public OrdenesForm() {
         initComponents();
         jbEliminar.setEnabled(false);
         jbGuardar.setEnabled(false);
         jbCancelar.setEnabled(false);
+
     }
 
     /**
@@ -36,7 +49,7 @@ public class OrdenesForm extends javax.swing.JInternalFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        jlTitulo = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jtPago = new javax.swing.JTextField();
@@ -63,9 +76,9 @@ public class OrdenesForm extends javax.swing.JInternalFrame {
 
         jPanel2.setBackground(new java.awt.Color(255, 102, 0));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Ordenes");
+        jlTitulo.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jlTitulo.setForeground(new java.awt.Color(255, 255, 255));
+        jlTitulo.setText("Ordenes");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -73,14 +86,14 @@ public class OrdenesForm extends javax.swing.JInternalFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jlTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(21, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jlTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20))
         );
 
@@ -127,6 +140,11 @@ public class OrdenesForm extends javax.swing.JInternalFrame {
 
         jbGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/Save_37110.png"))); // NOI18N
         jbGuardar.setText("Guardar");
+        jbGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbGuardarActionPerformed(evt);
+            }
+        });
 
         jbCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/cancel_77947.png"))); // NOI18N
         jbCancelar.setText("Cancelar");
@@ -144,6 +162,7 @@ public class OrdenesForm extends javax.swing.JInternalFrame {
             }
         });
 
+        jbBuscarAfiliado.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jbBuscarAfiliado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/buscar.png"))); // NOI18N
         jbBuscarAfiliado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -154,6 +173,7 @@ public class OrdenesForm extends javax.swing.JInternalFrame {
         jCheckActivo.setBackground(new java.awt.Color(102, 102, 102));
         jCheckActivo.setSelected(true);
 
+        jbBuscarPrestador.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jbBuscarPrestador.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/buscar.png"))); // NOI18N
         jbBuscarPrestador.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -201,15 +221,15 @@ public class OrdenesForm extends javax.swing.JInternalFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jdFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(jtAfiliado, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
                                     .addComponent(jtPrestador, javax.swing.GroupLayout.Alignment.LEADING))
                                 .addGap(29, 29, 29)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jbBuscarAfiliado, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jbBuscarPrestador, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jbBuscarAfiliado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jbBuscarPrestador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(47, 47, 47)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -221,32 +241,30 @@ public class OrdenesForm extends javax.swing.JInternalFrame {
                             .addComponent(jtPago, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jCheckActivo)
                             .addComponent(jcFormaPago, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 162, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(33, 33, 33)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(76, 76, 76)
-                        .addComponent(jbBuscarAfiliado)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jbBuscarPrestador))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(33, 33, 33)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
                             .addComponent(jtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(30, 30, 30)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jtAfiliado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(jtPrestador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel3)))
+                    .addComponent(jbBuscarAfiliado, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel4)
+                        .addComponent(jtPrestador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jbBuscarPrestador, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jdFecha, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -269,7 +287,7 @@ public class OrdenesForm extends javax.swing.JInternalFrame {
                     .addComponent(jbGuardar)
                     .addComponent(jbCancelar)
                     .addComponent(jbSalir))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -287,11 +305,30 @@ public class OrdenesForm extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbBuscarAfiliadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarAfiliadoActionPerformed
-        // TODO add your handling code here:
+        // Método del boton buscar Afiliado por dni
+        String _dni = JOptionPane.showInputDialog(null, "Ingrese el DNI del Afiliado");
+
+        _afiliado = new Afiliado();
+        _afiliado = (new AfiliadoData()).buscarAfiliadoPorDni(_dni);
+
+        if (_afiliado != null) {
+
+            jtAfiliado.setText(_afiliado.getApellido() + " " + _afiliado.getNombre());
+            jbBuscarPrestador.requestFocus();
+        }
     }//GEN-LAST:event_jbBuscarAfiliadoActionPerformed
 
     private void jbBuscarPrestadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarPrestadorActionPerformed
-        // TODO add your handling code here:
+        // Método del boton buscar prestador
+        String _dni = JOptionPane.showInputDialog(null, "Ingrese el DNI del Prestador");
+        _prestador = new Prestador();
+        _prestador = (new PrestadorData()).buscarPrestadorPorDni(_dni);
+
+        if (_prestador != null) {
+
+            jtPrestador.setText(_prestador.getApellido() + " " + _prestador.getNombre());
+            jdFecha.requestFocus();
+        }
     }//GEN-LAST:event_jbBuscarPrestadorActionPerformed
 
     private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
@@ -301,6 +338,7 @@ public class OrdenesForm extends javax.swing.JInternalFrame {
 
     private void jbNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNuevoActionPerformed
         // Método del boton Nuevo
+        jcFormaPago.removeAll();
         LlenarCombo();
         limpiarControles();
         jbBuscarAfiliado.requestFocus();
@@ -308,6 +346,15 @@ public class OrdenesForm extends javax.swing.JInternalFrame {
         jbGuardar.setEnabled(true);
         jbCancelar.setEnabled(true);
         nuevo = true;
+
+        jlTitulo.setText(jlTitulo.getText() + " " + "(Creando orden)");
+        Random random = new Random();
+        jtCodigo.setText(Integer.toString(random.nextInt(90000) + 10000));
+
+        String dia = ((jdFecha.getDate().toInstant().atZone(ZoneId.systemDefault())).toLocalDate()).getDayOfMonth() + "";
+        String mes = ((jdFecha.getDate().toInstant().atZone(ZoneId.systemDefault())).toLocalDate()).getMonthValue() + "";
+        jtCodigo.setText(dia + mes + "-" + jtCodigo.getText());
+
     }//GEN-LAST:event_jbNuevoActionPerformed
 
     private void jbCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCancelarActionPerformed
@@ -319,12 +366,65 @@ public class OrdenesForm extends javax.swing.JInternalFrame {
         jbCancelar.setEnabled(false);
         jbNuevo.requestFocus();
         nuevo = true;
+
+        jcFormaPago.removeAll();
+
+        jlTitulo.setText("Ordenes");
     }//GEN-LAST:event_jbCancelarActionPerformed
+
+    private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
+        // Método del boton guardar
+
+        String _cliente = jtAfiliado.getText();
+        String _medico = jtAfiliado.getText();
+        String _pago = jtPago.getText();
+        String _codigo = jtCodigo.getText();
+        String _formPago = (String) jcFormaPago.getSelectedItem();
+
+        if (_codigo.isEmpty()) {
+
+            JOptionPane.showMessageDialog(null, "Codigo no generado (crear una orden).");
+            jbNuevo.requestFocus();
+            return;
+        }
+
+        if (_afiliado == null && _cliente.isEmpty()) {
+
+            JOptionPane.showMessageDialog(null, "Debe Buscar un afiliado.");
+            jbBuscarAfiliado.requestFocus();
+            return;
+        }
+
+        if (_prestador == null && _medico.isEmpty()) {
+
+            JOptionPane.showMessageDialog(null, "Debe Buscar un prestador.");
+            jbBuscarPrestador.requestFocus();
+            return;
+        }
+
+        if (_pago.isEmpty()) {
+
+            JOptionPane.showMessageDialog(null, "Debe ingresar el monto a pagar.");
+            jtPago.requestFocus();
+            return;
+        }
+
+        if (nuevo) {
+
+            Orden _orden = new Orden(_codigo, _afiliado, _prestador, (jdFecha.getDate().toInstant().atZone(ZoneId.systemDefault())).toLocalDate(), _formPago, Double.parseDouble(_pago), true);
+            (new OrdenData()).guardarOrden(_orden);
+            _afiliado = null;
+            _prestador = null;
+            //java.awt.event.ActionEvent evt1 = null;
+            jbCancelarActionPerformed(null);
+        }
+
+
+    }//GEN-LAST:event_jbGuardarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox jCheckActivo;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -343,6 +443,7 @@ public class OrdenesForm extends javax.swing.JInternalFrame {
     private javax.swing.JButton jbSalir;
     private javax.swing.JComboBox<String> jcFormaPago;
     private com.toedter.calendar.JDateChooser jdFecha;
+    private javax.swing.JLabel jlTitulo;
     private javax.swing.JTextField jtAfiliado;
     private javax.swing.JTextField jtCodigo;
     private javax.swing.JTextField jtPago;
@@ -359,18 +460,17 @@ public class OrdenesForm extends javax.swing.JInternalFrame {
         jCheckActivo.setSelected(true);
         jbNuevo.requestFocus();
     }
-    
-     private void LlenarCombo() {
-         
-         MetodoPago[] _metodosPago = MetodoPago.values();
-         String[] nombreMetodo = new String[_metodosPago.length];
-         
-         for (int i = 0; i < _metodosPago.length; i++) {
-             
-             modeloCombo.addElement(_metodosPago[i].toString());
-         }
 
-       
+    private void LlenarCombo() {
+
+        MetodoPago[] _metodosPago = MetodoPago.values();
+        String[] nombreMetodo = new String[_metodosPago.length];
+
+        for (int i = 0; i < _metodosPago.length; i++) {
+
+            modeloCombo.addElement(_metodosPago[i].toString());
+        }
+
         jcFormaPago.setModel(modeloCombo);
     }
 }
