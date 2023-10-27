@@ -264,7 +264,7 @@ public class OrdenesForm extends javax.swing.JInternalFrame {
                         .addComponent(jLabel4)
                         .addComponent(jtPrestador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jbBuscarPrestador, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jdFecha, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -287,7 +287,7 @@ public class OrdenesForm extends javax.swing.JInternalFrame {
                     .addComponent(jbGuardar)
                     .addComponent(jbCancelar)
                     .addComponent(jbSalir))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -370,6 +370,9 @@ public class OrdenesForm extends javax.swing.JInternalFrame {
         jcFormaPago.removeAll();
 
         jlTitulo.setText("Ordenes");
+
+        _afiliado = null;
+        _prestador = null;
     }//GEN-LAST:event_jbCancelarActionPerformed
 
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
@@ -401,6 +404,15 @@ public class OrdenesForm extends javax.swing.JInternalFrame {
             jbBuscarPrestador.requestFocus();
             return;
         }
+        
+        LocalDate hoy = LocalDate.now();
+        LocalDate seleccionada = (jdFecha.getDate().toInstant().atZone(ZoneId.systemDefault())).toLocalDate();
+        
+        if (seleccionada.isBefore(hoy)) {
+            JOptionPane.showMessageDialog(null, "No se puede sacar ordenes con fecha anterior al dia actual");
+            jdFecha.requestFocus();
+            return;
+        }       
 
         if (_pago.isEmpty()) {
 
@@ -409,14 +421,20 @@ public class OrdenesForm extends javax.swing.JInternalFrame {
             return;
         }
 
-        if (nuevo) {
+        if ((new OrdenData()).numerosOrdenesXafiliado(_afiliado.getIdAfiliado(), _prestador.getIdPrestador(), (jdFecha.getDate().toInstant().atZone(ZoneId.systemDefault())).toLocalDate())) {
+            if (nuevo) {
 
-            Orden _orden = new Orden(_codigo, _afiliado, _prestador, (jdFecha.getDate().toInstant().atZone(ZoneId.systemDefault())).toLocalDate(), _formPago, Double.parseDouble(_pago), true);
-            (new OrdenData()).guardarOrden(_orden);
-            _afiliado = null;
-            _prestador = null;
-            //java.awt.event.ActionEvent evt1 = null;
-            jbCancelarActionPerformed(null);
+                Orden _orden = new Orden(_codigo, _afiliado, _prestador, (jdFecha.getDate().toInstant().atZone(ZoneId.systemDefault())).toLocalDate(), _formPago, Double.parseDouble(_pago), true);
+                (new OrdenData()).guardarOrden(_orden);
+                _afiliado = null;
+                _prestador = null;
+                //java.awt.event.ActionEvent evt1 = null;
+                jbCancelarActionPerformed(null);
+            }
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Ya tiene una orden para el prestador para ese dia.");
         }
 
 

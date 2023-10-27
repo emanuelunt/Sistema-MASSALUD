@@ -253,4 +253,27 @@ public class OrdenData {
         return _lista;
     } // Fin Listar de Ordenes x id de prestador
 
+    public boolean numerosOrdenesXafiliado(int _idAfiliado, int _idPrestador, LocalDate _fecha) {
+
+        try {
+            String sql = "SELECT COUNT(*) AS total  FROM ordenes \n"
+                    + "WHERE id_afiliado = ? AND id_prestador = ? AND fecha = ? GROUP BY id_afiliado,id_prestador,fecha;";
+
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, _idAfiliado);
+            ps.setInt(2, _idPrestador);
+            ps.setDate(3, Date.valueOf(_fecha));
+            
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return (false); // si encuentra ordenes
+            }                        
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "(número de ordenes por afiliado)Error al acceder a la tabla Ordenes." + ex.getMessage());
+        }
+        return (true); // Si no encuentra ordenes
+    }
+
 }

@@ -77,6 +77,11 @@ public class Test {
         for (Especialidad items : espe.listarEspecialidad()) {
             System.out.println(items.toString());
         }
+        
+        System.out.println("------- Numero de ordenes por afiliado -----------");
+        System.out.println((new OrdenData()).numerosOrdenesXafiliado(1, 1, LocalDate.of(2023, 10, 06)));
+        
+        
         System.out.println("------------------- Buscar ----------------------------");
         System.out.println((espe.buscarEspecialidadPorTipo("Geriatria")).toString());
         
@@ -114,6 +119,7 @@ public class Test {
         for (Afiliado item : afiliado.buscarAfiliadoPorApellido("ri") ) {
             System.out.println(item.toString());
         }
+        
         
     }    
 }

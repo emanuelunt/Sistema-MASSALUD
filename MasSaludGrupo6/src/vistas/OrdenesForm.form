@@ -126,7 +126,7 @@
                       </Group>
                       <Component id="jbBuscarPrestador" alignment="1" min="-2" pref="27" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="19" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jLabel5" alignment="1" min="-2" max="-2" attributes="0"/>
                       <Component id="jdFecha" alignment="1" min="-2" max="-2" attributes="0"/>
@@ -154,7 +154,7 @@
                       <Component id="jbCancelar" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jbSalir" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="21" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
