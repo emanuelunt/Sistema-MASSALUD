@@ -286,7 +286,7 @@ public class Main extends javax.swing.JFrame {
             .addGroup(BackgroundLayout.createSequentialGroup()
                 .addComponent(MenuBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Escritorio, javax.swing.GroupLayout.DEFAULT_SIZE, 697, Short.MAX_VALUE))
+                .addComponent(Escritorio, javax.swing.GroupLayout.DEFAULT_SIZE, 689, Short.MAX_VALUE))
         );
         BackgroundLayout.setVerticalGroup(
             BackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

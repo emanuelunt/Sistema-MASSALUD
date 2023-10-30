@@ -120,6 +120,7 @@ public class Test {
             System.out.println(item.toString());
         }
         
-        
+        System.out.println("------- Busqueda por código de orden  -----------");
+        System.out.println(((new OrdenData()).buscarOrdenXcodigo("2710-57481")).toString());  
     }    
 }

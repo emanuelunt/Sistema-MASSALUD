@@ -114,7 +114,7 @@ public class PrestadorData {
         
 
         try {
-            String sql = "SELECT idPrestador,apellido,nombre,dni,domicilio,telefono,id_especialidad,tipo,activo FROM prestadores JOIN especialidades ON id_especialidad = idCodigo WHERE activo = 1 ORDER BY apellido;";
+            String sql = "SELECT idPrestador,apellido,nombre,dni,domicilio,telefono,id_especialidad,tipo FROM prestadores JOIN especialidades ON id_especialidad = idCodigo WHERE prestadores.activo = 1 ORDER BY apellido;";
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
@@ -132,7 +132,7 @@ public class PrestadorData {
                 prestador.setDomicilio(rs.getString("domicilio"));
                 prestador.setTelefono(rs.getString("telefono"));
                 prestador.setEspecialidad(especialidad); 
-                prestador.setActivo(rs.getBoolean("activo"));                
+                //prestador.setActivo(rs.getBoolean("activo"));                
                 _prestador.add(prestador);
                
             }
@@ -221,5 +221,46 @@ public class PrestadorData {
 
         return _lista;
     } // Fin Lista de Prestadores X Especialidad
+    
+    public Prestador buscarPrestadorPorId(int _id) // Buscar por id
+    {
+        Prestador prestador = null;
+        Especialidad especialidad = null;
+
+        String sql = "SELECT idPrestador,apellido,nombre,dni,domicilio,telefono,id_especialidad,tipo,prestadores.activo FROM prestadores JOIN especialidades ON id_especialidad = idCodigo WHERE prestadores.idPrestador = ? AND prestadores.activo = 1;";
+        PreparedStatement ps = null;
+
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, _id);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                
+                prestador = new Prestador();
+                especialidad = new Especialidad();
+                especialidad.setIdCodigo(rs.getInt("id_especialidad"));
+                especialidad.setTipo(rs.getString("tipo"));
+                
+                prestador.setIdPrestador(rs.getInt("idPrestador"));
+                prestador.setApellido(rs.getString("apellido"));
+                prestador.setNombre(rs.getString("nombre"));
+                prestador.setDni(rs.getString("dni"));
+                prestador.setDomicilio(rs.getString("domicilio"));
+                prestador.setTelefono(rs.getString("telefono"));
+                prestador.setEspecialidad(especialidad);                
+               // prestador.setActivo(rs.getBoolean("activo")); 
+                
+            } else {
+                JOptionPane.showMessageDialog(null, "No existe el prestador!");
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "(Buscar Por DNI)Error al acceder a la tabla Prestadores." + ex.getMessage());
+        }
+        
+        return prestador;
+    }// Fin Buscar Prestador por id
     
 }

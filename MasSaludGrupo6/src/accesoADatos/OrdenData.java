@@ -275,5 +275,38 @@ public class OrdenData {
         }
         return (true); // Si no encuentra ordenes
     }
+    
+    public Orden buscarOrdenXcodigo(String _codigo){ // Buscar orden por código
+        
+        try{
+            String sql = "SELECT idOrden,codigo,id_afiliado,id_prestador,fecha,formaPago,importe,activo FROM ordenes WHERE codigo = ?;";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, _codigo);
+            ResultSet rs = ps.executeQuery();
+           if(rs.next()) {
+
+                Orden _orden = new Orden();
+                Afiliado _afiliado = new Afiliado();
+                _afiliado = (new AfiliadoData()).buscarAfiliadoPorId(rs.getInt("id_afiliado"));
+                Prestador _prestador = new Prestador();
+                _prestador = (new PrestadorData()).buscarPrestadorPorId(rs.getInt("id_prestador"));
+                
+                _orden.setIdOrden(rs.getInt("idOrden"));
+                _orden.setCodigo(rs.getString("codigo"));
+                _orden.setAfiliado(_afiliado);
+                _orden.setPrestador(_prestador);
+                _orden.setFecha(rs.getDate("fecha").toLocalDate());
+                _orden.setFormaPago(rs.getString("formaPago"));
+                _orden.setImporte(rs.getDouble("importe"));
+
+                return(_orden);
+            }
+            ps.close();
+        
+        }catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "(Buscar orden x código)Error al acceder a la tabla Ordenes." + ex.getMessage());
+        }
+        return(null);     
+    }
 
 }

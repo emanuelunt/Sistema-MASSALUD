@@ -198,5 +198,38 @@ public class AfiliadoData {
         }
         return _afiliado;
     }// Fin Buscar Afiliado por apellido
+    
+    public Afiliado buscarAfiliadoPorId(int _id) // Buscar por id
+    {
+        Afiliado afiliado = null;
+
+        String sql = "SELECT idAfiliado,apellido,nombre,dni,domicilio,telefono,activo FROM afiliados WHERE idAfiliado = ? AND activo = 1;";
+        PreparedStatement ps = null;
+
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, _id);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+
+                afiliado = new Afiliado();
+                afiliado.setIdAfiliado(rs.getInt("idAfiliado"));
+                afiliado.setApellido(rs.getString("apellido"));
+                afiliado.setNombre(rs.getString("nombre"));
+                afiliado.setDni(rs.getString("dni"));
+                afiliado.setDomicilio(rs.getString("domicilio"));
+                afiliado.setTelefono(rs.getString("telefono"));
+                afiliado.setActivo(rs.getBoolean("activo"));
+            } else {
+                JOptionPane.showMessageDialog(null, "No existe el afiliado!");
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "(Buscar Por idAfiliado)Error al acceder a la tabla Afiliados." + ex.getMessage());
+        }
+        return afiliado;
+    }// Fin Buscar Afiliado por id
 
 }

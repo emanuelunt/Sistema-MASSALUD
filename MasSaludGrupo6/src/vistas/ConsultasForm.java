@@ -4,17 +4,42 @@
  */
 package vistas;
 
+import accesoADatos.AfiliadoData;
+import accesoADatos.EspecialidadData;
+import accesoADatos.OrdenData;
+import accesoADatos.PrestadorData;
+import entidades.Afiliado;
+import entidades.Especialidad;
+import entidades.Orden;
+import entidades.Prestador;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author 54266
  */
 public class ConsultasForm extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form ConsultasForm
-     */
+    private DefaultTableModel modelo = new DefaultTableModel() {
+        public boolean isCellEditable(int fila, int columna) {
+            return false;
+        }
+    };
+
+    DefaultComboBoxModel<String> modeloCombo = new DefaultComboBoxModel<>();
+    DefaultComboBoxModel<String> modeloComboEspecialidad = new DefaultComboBoxModel<>();
+
     public ConsultasForm() {
         initComponents();
+        cargarCabeceraAfiliados();
+        cargarTablaAfilidos();
+        jdFecha.setDate(Date.valueOf(LocalDate.now()));
+        LlenarComboEspecialidad();
     }
 
     /**
@@ -26,16 +51,23 @@ public class ConsultasForm extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jtDni = new javax.swing.JTextField();
         jButton5 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
+        jbOrdenesEmitidas = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jTablaDatos = new javax.swing.JTable();
+        jcAfiliados = new javax.swing.JComboBox<>();
+        jdFecha = new com.toedter.calendar.JDateChooser();
+        jbBuscarOrdenesAP = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jcListadoEspecialidad = new javax.swing.JComboBox<>();
+        jrAfiliado = new javax.swing.JRadioButton();
+        jrPrestador = new javax.swing.JRadioButton();
 
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
 
@@ -66,19 +98,24 @@ public class ConsultasForm extends javax.swing.JInternalFrame {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Listados:");
 
-        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jtDni.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/salida.png"))); // NOI18N
         jButton5.setText("Salir");
-
-        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/buscar.png"))); // NOI18N
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
+                jButton5ActionPerformed(evt);
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jbOrdenesEmitidas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/buscar.png"))); // NOI18N
+        jbOrdenesEmitidas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbOrdenesEmitidasActionPerformed(evt);
+            }
+        });
+
+        jTablaDatos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -89,10 +126,40 @@ public class ConsultasForm extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jTablaDatos);
 
-        jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcAfiliados.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jcAfiliados.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Lista de Afiliados", "Lista de Prestadores" }));
+        jcAfiliados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcAfiliadosActionPerformed(evt);
+            }
+        });
+
+        jbBuscarOrdenesAP.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/buscar.png"))); // NOI18N
+        jbBuscarOrdenesAP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbBuscarOrdenesAPActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Listados:");
+
+        jcListadoEspecialidad.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jcListadoEspecialidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcListadoEspecialidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcListadoEspecialidadActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(jrAfiliado);
+        jrAfiliado.setText("Afiliado");
+
+        buttonGroup1.add(jrPrestador);
+        jrPrestador.setText("Prestador");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -101,40 +168,71 @@ public class ConsultasForm extends javax.swing.JInternalFrame {
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane1))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addComponent(jLabel2)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 878, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(13, 13, 13)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jcListadoEspecialidad, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jcAfiliados, 0, 199, Short.MAX_VALUE))
+                        .addGap(34, 34, 34)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jrAfiliado)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jrPrestador)
+                                .addGap(2, 2, 2))
+                            .addComponent(jtDni, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30)
-                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 177, Short.MAX_VALUE)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(93, 93, 93)
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jbBuscarOrdenesAP, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jdFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jbOrdenesEmitidas, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton5)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(3, 3, 3))
+                        .addComponent(jButton5)
+                        .addGap(42, 42, 42))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton7)))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(20, 20, 20)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(jLabel2)
+                                            .addComponent(jcAfiliados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jrAfiliado)
+                                            .addComponent(jrPrestador))
+                                        .addGap(22, 22, 22))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jdFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jcListadoEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jtDni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(34, 34, 34)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jbOrdenesEmitidas)
+                                    .addComponent(jbBuscarOrdenesAP))))
+                        .addGap(38, 38, 38)))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 386, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -152,21 +250,282 @@ public class ConsultasForm extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton7ActionPerformed
+    private void jbOrdenesEmitidasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbOrdenesEmitidasActionPerformed
+        // método del boton buscar ordenes memitidas un fechad dada
+        borrraFilasTabla();
+        borrarCabecera();
+        cargarCabeceraOrdenesEmitidas();
+        cargarTablaOrdenesEmitidas(0);
+        LlenarComboEspecialidad();
+    }//GEN-LAST:event_jbOrdenesEmitidasActionPerformed
+
+    private void jcAfiliadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcAfiliadosActionPerformed
+        // Método del combobox
+
+        borrraFilasTabla();
+        int seleccion = jcAfiliados.getSelectedIndex();
+
+        if (seleccion == 0) {
+            borrarCabecera();
+            cargarCabeceraAfiliados();
+            cargarTablaAfilidos();
+        }
+
+        if (seleccion == 1) {
+            borrarCabecera();
+            cargarCabeceraPrestador();
+            cargarTablaPrestador(null);
+        }
+    }//GEN-LAST:event_jcAfiliadosActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // Método del boton salir
+        this.dispose();
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jbBuscarOrdenesAPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarOrdenesAPActionPerformed
+        // Método del boton buscar orden por prestador o afiliado
+
+        String _dni = jtDni.getText();
+
+        if (!jrAfiliado.isSelected() != false && !jrPrestador.isSelected() != false) {
+            JOptionPane.showMessageDialog(null, "Debe selecionar un opcion.");
+            return;
+        }
+
+        if (_dni.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Debe ingresar un dni.");
+            jtDni.requestFocus();
+            return;
+        }
+
+        if (jrAfiliado.isSelected()) {
+            // caragr ordenes segun el afiliado
+            borrraFilasTabla();
+            borrarCabecera();
+            cargarCabeceraOrdenesEmitidas();
+            
+            int _id = ((new AfiliadoData()).buscarAfiliadoPorDni(_dni)).getIdAfiliado();
+            cargarTablaOrdenesEmitidas(_id);
+        }
+        
+        if (jrPrestador.isSelected()) {
+            // caragr ordenes segun el prestador
+            borrraFilasTabla();
+            borrarCabecera();
+            cargarCabeceraOrdenesXprestador();
+            
+            int _id = ((new PrestadorData()).buscarPrestadorPorDni(_dni)).getIdPrestador();
+            cargarTablaOrdenesXPrestador(_id);
+        }
+
+    }//GEN-LAST:event_jbBuscarOrdenesAPActionPerformed
+
+    private void jcListadoEspecialidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcListadoEspecialidadActionPerformed
+        // método del comboBox Listar presatdor por especialidad
+
+        Object elementoSeleccionado = jcListadoEspecialidad.getSelectedItem();
+
+        String nombreEspecialdiad = elementoSeleccionado.toString();
+        String[] partes = nombreEspecialdiad.split("-");
+        String _tipo = partes[1];
+
+        borrraFilasTabla();
+        borrarCabecera();
+        cargarCabeceraPrestador();
+        cargarTablaPrestador(_tipo);
+
+    }//GEN-LAST:event_jcListadoEspecialidadActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable jTablaDatos;
+    private javax.swing.JButton jbBuscarOrdenesAP;
+    private javax.swing.JButton jbOrdenesEmitidas;
+    private javax.swing.JComboBox<String> jcAfiliados;
+    private javax.swing.JComboBox<String> jcListadoEspecialidad;
+    private com.toedter.calendar.JDateChooser jdFecha;
+    private javax.swing.JRadioButton jrAfiliado;
+    private javax.swing.JRadioButton jrPrestador;
+    private javax.swing.JTextField jtDni;
     // End of variables declaration//GEN-END:variables
+
+    private void cargarCabeceraAfiliados() {
+        modelo.addColumn("Id");
+        modelo.addColumn("Apellido");
+        modelo.addColumn("Nombre");
+        modelo.addColumn("DNI");
+        modelo.addColumn("Domicilio");
+        modelo.addColumn("Télefono");
+        jTablaDatos.setModel(modelo);
+    }
+
+    private void cargarCabeceraPrestador() {
+        modelo.addColumn("Id");
+        modelo.addColumn("Apellido");
+        modelo.addColumn("Nombre");
+        modelo.addColumn("DNI");
+        modelo.addColumn("Domicilio");
+        modelo.addColumn("Télefono");
+        modelo.addColumn("Especialidad");
+        jTablaDatos.setModel(modelo);
+    }
+
+    private void cargarCabeceraOrdenesEmitidas() {
+        modelo.addColumn("Código");
+        modelo.addColumn("Afiliado");
+        modelo.addColumn("Prestador");
+        modelo.addColumn("Fecha");
+        modelo.addColumn("Forma Pago");
+        modelo.addColumn("Importe");
+        jTablaDatos.setModel(modelo);
+    }
+    
+    private void cargarCabeceraOrdenesXprestador() {
+        modelo.addColumn("Código");
+        modelo.addColumn("Prestador");
+        modelo.addColumn("Fecha");
+        modelo.addColumn("Forma Pago");
+        modelo.addColumn("Importe");
+        modelo.addColumn("Especialidad");
+        jTablaDatos.setModel(modelo);
+    }
+
+    private void cargarTablaAfilidos() {
+
+        AfiliadoData afi = new AfiliadoData();
+
+        for (Afiliado _afiliado : afi.listarAfiliado()) {
+            Object[] fila = {
+                _afiliado.getIdAfiliado(),
+                _afiliado.getApellido(),
+                _afiliado.getNombre(),
+                _afiliado.getDni(),
+                _afiliado.getDomicilio(),
+                _afiliado.getTelefono(),};
+            modelo.addRow(fila);
+        }
+    }
+
+    private void cargarTablaPrestador(String _tipo) {
+
+        PrestadorData pres = new PrestadorData();
+
+        if (_tipo != null) {
+
+            //JOptionPane.showMessageDialog(null, "Tipo de especialidad ->" + _tipo);
+
+            for (Prestador _prestador : pres.listarPrestadorXespecialidad(_tipo)) {
+                Object[] fila = {
+                    _prestador.getIdPrestador(),
+                    _prestador.getApellido(),
+                    _prestador.getNombre(),
+                    _prestador.getDni(),
+                    _prestador.getDomicilio(),
+                    _prestador.getTelefono(),
+                    _prestador.getEspecialidad().getTipo()
+                };
+                modelo.addRow(fila);
+            }
+        } else {
+
+            for (Prestador _prestador : pres.listarPrestador()) {
+                Object[] fila = {
+                    _prestador.getIdPrestador(),
+                    _prestador.getApellido(),
+                    _prestador.getNombre(),
+                    _prestador.getDni(),
+                    _prestador.getDomicilio(),
+                    _prestador.getTelefono(),
+                    _prestador.getEspecialidad().getTipo()
+                };
+                modelo.addRow(fila);
+            }
+        }
+    }
+
+    private void cargarTablaOrdenesEmitidas(int _id) {
+
+        OrdenData listaOrden = new OrdenData();
+
+        if (_id != 0) {
+            
+            for (Orden _orden : listaOrden.listarOrdenesXidAfiliado(_id)) {
+                Object[] fila = {
+                    _orden.getCodigo(),
+                    _orden.getAfiliado().getApellido() + " " + _orden.getAfiliado().getNombre(),
+                    _orden.getPrestador().getApellido() + " " + _orden.getPrestador().getNombre(),
+                    _orden.getFecha(),
+                    _orden.getFormaPago(),
+                    _orden.getImporte()
+                };
+                modelo.addRow(fila);
+            }            
+
+        } else {
+            for (Orden _orden : listaOrden.listarOrdenesXfecha((jdFecha.getDate().toInstant().atZone(ZoneId.systemDefault())).toLocalDate())) {
+                Object[] fila = {
+                    _orden.getCodigo(),
+                    _orden.getAfiliado().getApellido() + " " + _orden.getAfiliado().getNombre(),
+                    _orden.getPrestador().getApellido() + " " + _orden.getPrestador().getNombre(),
+                    _orden.getFecha(),
+                    _orden.getFormaPago(),
+                    _orden.getImporte()
+                };
+                modelo.addRow(fila);
+            }
+        }
+    }
+    
+     private void cargarTablaOrdenesXPrestador(int _id) {
+
+        OrdenData listaOrden = new OrdenData();
+            
+            for (Orden _orden : listaOrden.listarOrdenesXidPrestador(_id)) {
+                Object[] fila = {
+                    _orden.getCodigo(),
+                    _orden.getPrestador().getApellido() + " " + _orden.getPrestador().getNombre(),
+                    _orden.getFecha(),
+                    _orden.getFormaPago(),
+                    _orden.getImporte(),
+                    _orden.getPrestador().getEspecialidad().getTipo()
+                };
+                modelo.addRow(fila);
+            }                   
+    }
+
+    private void borrarCabecera() {
+
+        DefaultTableModel modelo = (DefaultTableModel) jTablaDatos.getModel();
+        modelo.setColumnCount(0);
+        modelo.setRowCount(0);
+        jTablaDatos.revalidate();
+        jTablaDatos.repaint();
+    }
+
+    private void borrraFilasTabla() {
+
+        int numFilas = modelo.getRowCount();
+
+        for (int i = numFilas - 1; i >= 0; i--) {
+            modelo.removeRow(i);
+        }
+    }
+
+    private void LlenarComboEspecialidad() {
+
+        for (Especialidad espec : (new EspecialidadData()).listarEspecialidad()) {
+            String representacion = espec.getIdCodigo() + "-" + espec.getTipo();
+            modeloComboEspecialidad.addElement(representacion);
+        }
+        jcListadoEspecialidad.setModel(modeloComboEspecialidad);
+    }
 }

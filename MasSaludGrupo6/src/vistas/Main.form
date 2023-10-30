@@ -72,7 +72,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <Component id="MenuBar" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="Escritorio" pref="697" max="32767" attributes="0"/>
+                  <Component id="Escritorio" pref="689" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
