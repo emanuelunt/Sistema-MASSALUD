@@ -78,6 +78,8 @@ public class EspecialidadesForm extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
+        setClosable(true);
+
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
 
         jPanel4.setBackground(new java.awt.Color(255, 102, 0));

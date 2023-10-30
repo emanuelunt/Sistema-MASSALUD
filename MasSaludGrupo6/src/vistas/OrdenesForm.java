@@ -19,7 +19,6 @@ import javax.swing.JOptionPane;
 import java.util.Random;
 import javax.swing.JInternalFrame;
 
-
 /**
  *
  * @author 54266
@@ -75,6 +74,8 @@ public class OrdenesForm extends javax.swing.JInternalFrame {
         jtCodigo = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jbBuscarOrden = new javax.swing.JButton();
+
+        setClosable(true);
 
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
 
@@ -338,7 +339,7 @@ public class OrdenesForm extends javax.swing.JInternalFrame {
             jbBuscarPrestador.requestFocus();
         } else {
 
-            JOptionPane.showMessageDialog(null, "Debe cargar el afiliado.");
+            JOptionPane.showMessageDialog(null, "Debe dar de alta el afiliado.");
         }
     }//GEN-LAST:event_jbBuscarAfiliadoActionPerformed
 
@@ -352,6 +353,9 @@ public class OrdenesForm extends javax.swing.JInternalFrame {
 
             jtPrestador.setText(_prestador.getApellido() + " " + _prestador.getNombre());
             jdFecha.requestFocus();
+        } else {
+
+            JOptionPane.showMessageDialog(null, "Debe dar de alta el prestador.");
         }
     }//GEN-LAST:event_jbBuscarPrestadorActionPerformed
 
@@ -410,7 +414,7 @@ public class OrdenesForm extends javax.swing.JInternalFrame {
 
         if (_codigo.isEmpty()) {
 
-            JOptionPane.showMessageDialog(null, "Codigo no generado (crear una orden).");
+            JOptionPane.showMessageDialog(null, "Código no generado (crear una orden).");
             jbNuevo.requestFocus();
             return;
         }
@@ -518,14 +522,14 @@ public class OrdenesForm extends javax.swing.JInternalFrame {
 
         int opcion = JOptionPane.showConfirmDialog(
                 null,
-                "¿Desea Eliminar los datos de la orden de Código "+ jtCodigo.getText() +" ?",
+                "¿Desea Eliminar los datos de la orden de Código " + jtCodigo.getText() + " ?",
                 "Confirmación",
                 JOptionPane.YES_NO_OPTION
         );
 
         if (opcion == JOptionPane.YES_OPTION) {
 
-            (new OrdenData()).eliminarOrden(_idCodigoOrden);            
+            (new OrdenData()).eliminarOrden(_idCodigoOrden);
 
         } else {
             // El usuario eligió no eliminar al alumno
